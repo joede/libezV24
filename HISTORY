@@ -16,6 +16,14 @@
 `========================================================================='
 
 
+11.4.2003 jd
+
+	* Pascal Bleser <guru@unixtech.be> has made a spec file to build RPM
+	  packages. Binary build for SuSE-Linux could be found at
+	  http://guru.unixtech.be/rpm/packages/Development/libezV24/.
+	  Note: I can't build or test the RPM build process. If you have any
+	  questions about RPM's, please contact Pascal Bleser.
+
 11.2.2003 jd
 
 	Release 0.1.1
@@ -27,7 +35,6 @@
 	* v24OpenPort() should now initialize non blocking read correctly.
 
 	* the base name of the static library now ends with a _s!
-
 
 10.9.2002 jd
 

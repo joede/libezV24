@@ -1,7 +1,7 @@
                                                       -*- indented-text -*-
 Project:    ezV24-Library
 File:       libezv24/README
-Time-stamp: <02/09/10 09:32:53 jd>
+Time-stamp: <03/04/11 11:00:17 jd>
 ----------------------------------------------------------------------------
 
 This is the first full featured release of the `ezV24' library. The goal of
@@ -78,6 +78,16 @@ basename of the library with `-lezV24'. The whole call could look like this:
 	gcc -o foo foo.c -lezV24
 
 For more information, just have a look into the html documentation.
+
+
+PACKAGING
+---------
+
+At the time being, there's only a spec file for RPM's. Thanx to Pascal Bleser
+<guru@unixtech.be>! Binary build for SuSE-Linux could be found at
+http://guru.unixtech.be/rpm/packages/Development/libezV24/.  Note that I can't
+build or test the RPM build process. If you have any questions about RPM's,
+please contact Pascal Bleser.
 
 
 -- 

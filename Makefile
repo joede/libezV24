@@ -25,6 +25,10 @@ PLATFORM=__LINUX__
 # the base path where the file should be installed to.
 PREFIX = /usr/local
 
+# an additional prefix for building RPM packages. NOTE: don't forget to add a
+# trailing slash!
+DESTDIR =
+
 # generate the name of the output file in dependence of the development state.
 #
 ifeq "${RELEASE}" "DEBUG"
@@ -44,16 +48,19 @@ LIBS =
 
 
 ifeq "${RELEASE}" "DEBUG"
-C_FLAG = -c -Wall -fPIC -D$(PLATFORM) $(INCDIR)
+C_OPT  = -O2
+C_FLAG = -c -Wall -fPIC $(C_OPT) -D$(PLATFORM) $(INCDIR)
 C_DEFS = -DDEBUG -DBETA
 LFLAGS = $(LIBDIR)
 else 
 ifeq "${RELEASE}" "BETA"
-C_FLAG = -c -Wall -fPIC -O2 -D$(PLATFORM) $(INCDIR)
+C_OPT  = -O2
+C_FLAG = -c -Wall -fPIC $(C_OPT) -D$(PLATFORM) $(INCDIR)
 C_DEFS = -DBETA
 LFLAGS = $(LIBDIR)
 else
-C_FLAG = -c -Wall  -fPIC -O2 -D$(PLATFORM) $(INCDIR)
+C_OPT  = -O2
+C_FLAG = -c -Wall -fPIC $(C_OPT) -D$(PLATFORM) $(INCDIR)
 C_DEFS = -DFINAL
 LFLAGS = -s $(LIBDIR)
 endif
@@ -111,14 +118,13 @@ snprintf.o:	snprintf.c snprintf.h
 #
 
 install:
-		install -d -m 755 $(PREFIX)/include/$(SOBASE)/;
-		install -m 644 ezV24.h $(PREFIX)/include/$(SOBASE)/
-		install -m 644 -s $(LIBNAME) $(PREFIX)/lib/$(LIBNAME)
-		install -m 755 -s $(NAME) $(PREFIX)/lib/$(NAME)
-		rm -f $(PREFIX)/lib/$(SONAME) $(PREFIX)/lib/$(PLAINNAME)
-		ln -s $(PREFIX)/lib/$(NAME) $(PREFIX)/lib/$(SONAME);\
-		ln -s $(PREFIX)/lib/$(SONAME) $(PREFIX)/lib/$(PLAINNAME);\
-		ldconfig
+		install -d -m 755 $(DESTDIR)$(PREFIX)/include/$(SOBASE)/;
+		install -m 644 ezV24.h $(DESTDIR)$(PREFIX)/include/$(SOBASE)/
+		install -m 644 -s $(LIBNAME) $(DESTDIR)$(PREFIX)/lib/$(LIBNAME)
+		install -m 755 -s $(NAME) $(DESTDIR)$(PREFIX)/lib/$(NAME)
+		rm -f $(DESTDIR)$(PREFIX)/lib/$(SONAME) $(DESTDIR)$(PREFIX)/lib/$(PLAINNAME)
+		ln -s $(PREFIX)/lib/$(NAME) $(DESTDIR)$(PREFIX)/lib/$(SONAME);\
+		ln -s $(PREFIX)/lib/$(SONAME) $(DESTDIR)$(PREFIX)/lib/$(PLAINNAME);\
 
 uninstall:
 		rm -f $(PREFIX)/include/ezV24/*
@@ -131,7 +137,7 @@ uninstall:
 
 # This entry is for packing a distribution tarball
 #
-tarball:
+tarball:	api-ref
 		if test -d $(PROJECTNAME); then\
 		  rm -fR $(PROJECTNAME)/*;\
 		  rmdir $(PROJECTNAME);\
