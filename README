@@ -1,15 +1,15 @@
                                                       -*- indented-text -*-
 Project:    ezV24-Library
 File:       libezv24/README
-Time-stamp: <03/04/11 11:00:17 jd>
+Time-stamp: <03/05/13 09:04:05 jd>
 ----------------------------------------------------------------------------
 
-This is the first full featured release of the `ezV24' library. The goal of
-this libary is to provide a easy to use interface to the serial ports of the
-linux system. This release comes with rudimentary support for the CYGWIN
-toolchain (see http://www.cygwin.com/). Due to the great work of the cygwin
-folks, only minimal changes are needed. I know that that the cygwin-stuff
-isn't the final stuff, but it's a first step and it works.
+The goal of the `ezV24' library is to provide an easy to use interface to the
+serial ports of an linux/unix system. At the current stage, it comes with
+rudimentary support for the CYGWIN toolchain (see
+http://www.cygwin.com/). Due to the great work of the cygwin folks, only
+minimal changes are needed. I know that that the cygwin-stuff isn't the final
+stuff, but it's a first step and it works.
 
 
 HOME ON THE NET
@@ -83,11 +83,16 @@ For more information, just have a look into the html documentation.
 PACKAGING
 ---------
 
-At the time being, there's only a spec file for RPM's. Thanx to Pascal Bleser
-<guru@unixtech.be>! Binary build for SuSE-Linux could be found at
-http://guru.unixtech.be/rpm/packages/Development/libezV24/.  Note that I can't
-build or test the RPM build process. If you have any questions about RPM's,
-please contact Pascal Bleser.
+At the time being, ezV24 supports the debian package format .deb and the Red
+Hat format RPM. Both package type are `unofficial'. This means, these
+packages are not build by official members of the corresponding
+organizations.
+
+The spec file for RPM's is made by Pascal Bleser <guru@unixtech.be>! 
+Thanx. Binary build for SuSE-Linux could be found at
+http://guru.unixtech.be/rpm/packages/Development/libezV24/.  Note that I
+neither build RPM's nor test the RPM build process. If you have any questions
+about RPM's, please contact Pascal Bleser.
 
 
 -- 
