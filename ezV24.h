@@ -2,11 +2,11 @@
  *
  * $Id$
  * -----------------------------------------------------------------------
- * Copyright  (c) 2001  Joerg Desch <jd@die-deschs.de>
+ * Copyright  (c) 2001,02  Joerg Desch <jd@die-deschs.de>
  * -----------------------------------------------------------------------
  * PROJECT: ezV24 -- easy RS232/V24 access
  * MODULE.: EZV24.H: 
- * AUTHOR.: Joerg Desch <jd@die-deschs.de>
+ * AUTHOR.: Joerg Desch <jdesch@users.sourceforge.net>
  * -----------------------------------------------------------------------
  * DESCRIPTION:
  *
@@ -15,8 +15,13 @@
  *
  * -----------------------------------------------------------------------
  * $Log$
- * Revision 1.1  2002/06/20 09:51:20  jdesch
- * Initial revision
+ * Revision 1.2  2002/06/20 11:42:43  jdesch
+ * * add error code V24_E_TIMEOUT.
+ * * some fixes in the documentation.
+ * * some other minor corrections.
+ *
+ * Revision 1.1.1.1  2002/06/20 09:51:20  jdesch
+ * First CVS import of release 0.0.4
  *
  *
  */
@@ -46,46 +51,65 @@ extern "C" {
  */
 enum __EZV24_ERROR_CODES
 {
-    V24_E_OK=0,				     /// no error, all went fine.
-    V24_E_ILLPARM,			     /// `general' illegal parameter.
-    V24_E_ILLBAUD,			     /// illegal baudrate.
-    V24_E_ILLDATASZ,			     /// illegal datasize.
-    V24_E_ILLPARITY,			     /// illegal parity.
-    V24_E_ILLHANDLE,			     /** illegal handle. The parameter
-					       * specifying the \emph{port
-					       * handle} is bad. Make sure
-					       * unused handle are set to
-					       * #NULL#.
-					       */
-    V24_E_ILLTIMEOUT,			     /// illegal timeout value.
-    V24_E_CREATE_LOCK,			     /// creation of the lock file failed.
-    V24_E_OPEN_LOCK,			     /// lock file can't be opened.
-    V24_E_KILL_LOCK,			     /// unlink of the lock file failed.
-    V24_E_WRITE_LOCK,			     /// can't write to the lock file.
-    V24_E_LOCK_EXIST,			     /** foreign lock file exist. This
-                                               * means, that another process
-                                               * allready has locked the port.
-                                               */
-    V24_E_NOMEM,			     /// not enough memory.
-    V24_E_NULL_POINTER,			     /// pointer is #NULL#.
-    V24_E_OPEN,				     /// #open# failed.
-    V24_E_READ,				     /// #read# failed.
-    V24_E_WRITE,			     /// #write# failed.
-    V24_E_NOT_INIT,			     /// library is not initialized.
-    V24_E_NO_PROC_FILE,			     /** no #proc# file system. We
-                                               * can't open the virtual file
-					       * #/proc/tty/...#
-                                               */
-    V24_E_NOT_IMPLEMENTED,		     /// function not implemented.
-    V24_E_DBG_MESSAGES=100,		     /** debugging. Error codes greater
-					       * than this value are debug
-					       * messages.
-					       */
-    V24_E_DBG_STALE_LOCK		     /** stale lock file
-					       * overwritten. The PID stored in
-					       * the lock file doesn't exist,
-					       * so we can overwrite it.
-                                               */
+    /// no error, all went fine.
+    V24_E_OK=0,
+    /// `general' illegal parameter.
+    V24_E_ILLPARM,
+    /// illegal baudrate.
+    V24_E_ILLBAUD,
+    /// illegal datasize.
+    V24_E_ILLDATASZ,
+    /// illegal parity.
+    V24_E_ILLPARITY,
+
+    /** illegal handle. The parameter specifying the \emph{port handle} is
+     * bad. Make sure unused handle are set to #NULL#.
+     */
+    V24_E_ILLHANDLE,
+    /// illegal timeout value.
+    V24_E_ILLTIMEOUT,
+    /// creation of the lock file failed.
+    V24_E_CREATE_LOCK,
+    /// lock file can't be opened.
+    V24_E_OPEN_LOCK,
+    /// unlink of the lock file failed.
+    V24_E_KILL_LOCK,
+    /// can't write to the lock file.
+    V24_E_WRITE_LOCK,
+
+    /** foreign lock file exist. This means, that another process allready has
+     * locked the port.
+     */
+    V24_E_LOCK_EXIST,
+    /// not enough memory.
+    V24_E_NOMEM,
+    /// pointer is #NULL#.
+    V24_E_NULL_POINTER,
+    /// #open# failed.
+    V24_E_OPEN,
+    /// #read# failed.
+    V24_E_READ,
+    /// #write# failed.
+    V24_E_WRITE,
+    /// library is not initialized.
+    V24_E_NOT_INIT,
+
+    /** no #proc# file system. We can't open the virtual file #/proc/tty/...#
+     */
+    V24_E_NO_PROC_FILE,
+    /// function not implemented.
+    V24_E_NOT_IMPLEMENTED,
+    /// timeout waiting for data.
+    V24_E_TIMEOUT,
+
+    /** debugging. Error codes greater than this value are debug messages.
+     */
+    V24_E_DBG_MESSAGES=100,
+
+    /** stale lock file overwritten. The PID stored in the lock file doesn't
+     * exist, so we can overwrite it.
+     */
+    V24_E_DBG_STALE_LOCK
 };
 
 
@@ -373,13 +397,15 @@ int v24SetTimeouts ( v24_port_t *port, int TenthOfSeconds );
 
 /** The function tries to read a single character from the opened device. To do
  * this, the function \Ref{v24Read} is used. If we have got some data, the
- * character is returned as integer value. The caller have to cast it bach to
- * the data type he need. In a case of an error, the functions returns
- * #-1#. The caller have to use \Ref{v24QueryErrno} to get the exact error
- * code.
+ * character is returned as integer value. The caller have to cast it to the
+ * data type he need. 
  *
- * Possible error code are #V24_OK#, #V24_E_NULL_POINTER#, #V24_E_ILLHANDLE# or
- * #V24_READ#. 
+ * In a case of an error, the functions returns #-1#. The caller has to use
+ * \Ref{v24QueryErrno} to get the exact error code. Contrary to \Ref{v24Read},
+ * a timeout is reported as error!
+ *
+ * Possible error code are #V24_OK#, #V24_E_NULL_POINTER#, #V24_E_ILLHANDLE#,
+ * #V24_E_TIMEOUT# or #V24_READ#.
  *
  * @param port pointer to handle of the opened port.
  * @return (int) the character read or #-1#.
@@ -389,7 +415,7 @@ int v24SetTimeouts ( v24_port_t *port, int TenthOfSeconds );
 int v24Getc ( v24_port_t *port );
 
 
-/**
+/** This function simply send one character. Nothing more and nothing less.
  *
  * The values returned are: #V24_E_OK#, #V24_E_ILLHANDLE#,
  *
@@ -407,7 +433,10 @@ int v24Putc ( v24_port_t *port, unsigned char TheData );
  * receive queue leads to an error. If the flag #V24_NON_BLOCK# is used, the
  * function will wait for the reception of character. The wait time is limited
  * to the given \emph{timeout time}. If this limit is exceeded, the function
- * aborts waiting.
+ * aborts waiting. If nothing is read, the returned value is #0#, and the error
+ * code is set to #V24_E_TIMEOUT#. At this level it's no real error, so there
+ * is no error report for the debug output (see #V24_DEBUG_ON# in
+ * \Ref{v24OpenPort}).
  *
  * The parameter #Buffer# references a buffer that should hold the received
  * characters. The parameter #Len# is the number of characters to read.
@@ -415,8 +444,8 @@ int v24Putc ( v24_port_t *port, unsigned char TheData );
  * The function returns the number of character read. An error is indicated by
  * a return vlaue of #-1#. Use \Ref{v24QueryErrno} to get the exact error code.
  *
- * Possible error code are #V24_OK#, #V24_E_NULL_POINTER#, #V24_E_ILLHANDLE# or
- * #V24_READ#.
+ * Possible error code are #V24_OK#, #V24_E_NULL_POINTER#, #V24_E_ILLHANDLE#,
+ * #V24_E_TIMEOUT# or #V24_READ#.
  *
  * \textbf{Note:} the caller has to ensure, that #Buffer# can hold the #Len#
  * characters.

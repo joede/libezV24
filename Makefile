@@ -36,6 +36,9 @@ SONAME = lib$(SOBASE).so.$(SORELEASE)
 LIBNAME = lib$(SOBASE)-$(SORELEASE).a
 PLAINNAME = lib$(SOBASE).so
 
+# basename of the project
+PROJECTNAME = libezV24-$(VERSION).$(PATCHLEVEL)
+
 OBJS = ezV24.o snprintf.o
 LIBS = 
 
@@ -131,12 +134,11 @@ uninstall:
 
 # This entry is for packing a distribution tarball
 #
-PROJECTNAME = libezV24-$(VERSION).$(PATCHLEVEL)
 tarball:
 		mkdir $(PROJECTNAME)
 		cp ezV24.h ezV24_config.h ezV24.c $(PROJECTNAME)/
 		cp snprintf.h snprintf.c test-v24.c $(PROJECTNAME)/
-		cp Makefile README $(PROJECTNAME)/
+		cp Makefile Makefile.cygwin README $(PROJECTNAME)/
 		cp AUTHORS HISTORY COPY* BUGS $(PROJECTNAME)/
 		cp doc++.conf manual.dxx $(PROJECTNAME)/
 		cp -r --parents api-html $(PROJECTNAME)/
@@ -164,6 +166,12 @@ test-v24:	test-v24.c ezV24.h
 
 clean:
 		rm -f *.o core
+
+clean-all:
+		rm -f *.o core $(NAME) $(LIBNAME)
+		rm -f $(PROJECTNAME).tar.gz
+		rm -f api-html/*
+		rmdir api-html
 
 
 # --[end of file]-----------------------------------------------------------

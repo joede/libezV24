@@ -1,7 +1,7 @@
 /* -*- Mode: C -*-
  * $Id$
  * -----------------------------------------------------------------------
- * Copyright  (c) 2001  Joerg Desch <jd@die-deschs.de>
+ * Copyright  (c) 2001,02  Joerg Desch <jd@die-deschs.de>
  * -----------------------------------------------------------------------
  * PROJECT: ezV24-Library
  * MODUL..: MANUAL.DXX: 
@@ -15,7 +15,7 @@
 /** @name The ezV24 Library
 
 \begin{center}
-{\small Copyright (c) 2001 Joerg Desch}
+{\small Copyright (c) 2002 Joerg Desch}
 \end{center}
 
 The project it hosted at sourceforge. You can find the latest release of the

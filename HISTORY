@@ -12,22 +12,32 @@
                  Compiler: ANSI-C
 
 +=========================================================================+
-|            Copyright   (c) Jörg Desch <jd@die-deschs.de>                |
+|         Copyright   (c) Jörg Desch <jdesch@users.sourceforge.net>       |
 `========================================================================='
 
+
+20.6.2002 jd
+
+	* ezV24.c: v24Read() now set's V24_E_TIMEOUT if no characters are
+	  read. In this case the return value is 0, so it indicates that is
+	  no real error. It's part of the application to decide how to handle
+	  this. ;-)
+	* ezV24.h: doc++ comments updates and error code V24_E_TIMEOUT
+	  inserted. The doc++ must be in front of each enum-entry! Fixed for
+	  __EZV24_ERROR_CODES.
+	* manual.dxx: minor fixes.
+	* Makefile*: add target `clean-all' to remove all stuff that is
+	  generated. The Makefile for cygwin was missinh in the tarball.
 
 12.5.2002 jd
 
 	Release 0.0.4
 
-
 6.5.2002 jd
 
 	* bug in lockfile handling fixed. The call to buildLockName returns a
 	  V24_E_* constant and not --as used before-- a boolean.
-
 	* test-v24.c: i now use -p instead of -c to specify the port name.
-
 
 2.5.2002 jd
 
@@ -37,9 +47,7 @@
 11.3.2002 jd
 
 	* ezV24.c: v24SetDTR calls ioctrl with status instead of &status.
-
 	* test-v24.c: usage: -c instead of -p to select the port.
-
 
 24.1.2002 jd
 
@@ -50,11 +58,9 @@
 	* ezV24.h: new error constant V24_E_ILLPARM. Documentation of v24Gets
 	  updated.
 
-
 18.11.2001 jd
 
-	* Release 0.0.3
-	
+	* Release 0.0.3	
 
 15.11.2001 jd
 

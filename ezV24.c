@@ -2,11 +2,11 @@
  *
  * $Id$
  * --------------------------------------------------------------------------
- * Copyright  (c) 2001  Joerg Desch <jd@die-deschs.de>
+ * Copyright  (c) 2001,02  Joerg Desch <jd@die-deschs.de>
  * --------------------------------------------------------------------------
  * PROJECT: ezV24 -- easy RS232/V24 access
  * MODULE.: EZV24.C: 
- * AUTHOR.: Joerg Desch <jd@die-deschs.de>
+ * AUTHOR.: Joerg Desch <jdesch@users.sourceforge.net>
  * --------------------------------------------------------------------------
  * DESCRIPTION:
  *
@@ -15,8 +15,13 @@
  *
  * --------------------------------------------------------------------------
  * $Log$
- * Revision 1.1  2002/06/20 09:51:19  jdesch
- * Initial revision
+ * Revision 1.2  2002/06/20 11:42:43  jdesch
+ * * add error code V24_E_TIMEOUT.
+ * * some fixes in the documentation.
+ * * some other minor corrections.
+ *
+ * Revision 1.1.1.1  2002/06/20 09:51:19  jdesch
+ * First CVS import of release 0.0.4
  *
  *
  */
@@ -503,7 +508,6 @@ int v24Getc ( v24_port_t *port )
 	reportError(port,V24_E_ILLHANDLE,"v24Getc");
 	return -1;
     }
-    port->Errno=V24_E_OK;
     if ( v24Read(port,&TheData,1)!=1 )
     {
 	reportError(port,port->Errno,"v24Getc");
@@ -520,7 +524,6 @@ int v24Putc ( v24_port_t *port, unsigned char TheData )
 	reportError(port,V24_E_ILLHANDLE,"v24Putc");
 	return -1;
     }
-    port->Errno=V24_E_OK;
     if ( v24Write(port,&TheData,1)!=1 )
 	reportError(port,port->Errno,"v24Putc");
     return port->Errno;
@@ -549,6 +552,10 @@ int v24Read ( v24_port_t *port, unsigned char* Buffer, size_t Len )
     {
 	port->Errno=V24_E_READ;
 	reportError(port,port->Errno,"v24Read");
+    }
+    else if ( _read == 0 )
+    {
+	port->Errno=V24_E_TIMEOUT;
     }
     return _read;
 }
@@ -681,6 +688,20 @@ int v24HaveData ( v24_port_t *port )
     ioctl(port->fd,FIONREAD,&CharsWaiting);
     return CharsWaiting;
 #else
+/* ===== may be this is a portable work-around ===== */
+/* #  if defined(F_GETFL) && defined(O_NDELAY) */
+/*     int old; */
+/*     char c; */
+/*     old = fcntl(fd, F_GETFL, 0); */
+/*     fcntl(fd, F_SETFL, old | O_NDELAY); */
+/*     CharsWaiting = read(port->fd, &c, 1); */
+/*     fcntl(fd, F_SETFL, old); */
+/*     return CharsWaiting; */
+/* #  else */
+/*     port->Errno=V24_E_NOT_IMPLEMENTED; */
+/*     return -1 ; */
+/* #  endif */
+/* ================================================= */
     port->Errno=V24_E_NOT_IMPLEMENTED;
     return -1;
 #endif
