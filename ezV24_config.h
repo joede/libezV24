@@ -28,8 +28,8 @@
  *
  * -----------------------------------------------------------------------
  * $Log$
- * Revision 1.1  2002/06/20 09:51:20  jdesch
- * Initial revision
+ * Revision 1.1.1.1  2002/06/20 09:51:20  jdesch
+ * First CVS import of release 0.0.4
  *
  *
  */
