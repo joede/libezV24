@@ -16,6 +16,11 @@
 `========================================================================='
 
 
+9.5.2003 jd
+
+	* add support for debian packages. Note that these two packages (the
+	  runtime and the devel package) are unofficial .deb's for woody.
+
 11.4.2003 jd
 
 	* Pascal Bleser <guru@unixtech.be> has made a spec file to build RPM

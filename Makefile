@@ -150,6 +150,7 @@ tarball:	api-ref
 		cp AUTHORS HISTORY COPY* BUGS ChangeLog $(PROJECTNAME)/
 		cp doc++.conf manual.dxx $(PROJECTNAME)/
 		cp -r --parents api-html $(PROJECTNAME)/
+		cp -r --parents debian $(PROJECTNAME)/
 		tar cfz $(PROJECTNAME).tar.gz $(PROJECTNAME)
 		rm -fR $(PROJECTNAME)/*
 		rmdir $(PROJECTNAME)
