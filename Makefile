@@ -124,8 +124,11 @@ install:
 		install -m 644 -s $(LIBNAME) $(DESTDIR)$(PREFIX)/lib/$(LIBNAME)
 		install -m 755 -s $(NAME) $(DESTDIR)$(PREFIX)/lib/$(NAME)
 		rm -f $(DESTDIR)$(PREFIX)/lib/$(SONAME) $(DESTDIR)$(PREFIX)/lib/$(PLAINNAME)
-		ln -s $(PREFIX)/lib/$(NAME) $(DESTDIR)$(PREFIX)/lib/$(SONAME);\
-		ln -s $(PREFIX)/lib/$(SONAME) $(DESTDIR)$(PREFIX)/lib/$(PLAINNAME);\
+		ln -s $(PREFIX)/lib/$(NAME) $(DESTDIR)$(PREFIX)/lib/$(SONAME)
+		ln -s $(PREFIX)/lib/$(SONAME) $(DESTDIR)$(PREFIX)/lib/$(PLAINNAME)
+		if [ -z $$NO_LDCONFIG ]; then \
+		  ldconfig; \
+		fi  
 
 uninstall:
 		rm -f $(PREFIX)/include/ezV24/*
@@ -133,7 +136,9 @@ uninstall:
 		rm -f $(PREFIX)/lib/$(LIBNAME)
 		rm -f $(PREFIX)/lib/$(NAME)
 		rm -f $(PREFIX)/lib/$(SONAME) $(PREFIX)/lib/$(PLAINNAME)
-		ldconfig
+		if [ -z $$NO_LDCONFIG ]; then \
+		  ldconfig; \
+		fi  
 
 
 # This entry is for packing a distribution tarball
