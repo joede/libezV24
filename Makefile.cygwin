@@ -113,7 +113,7 @@ snprintf.o:	snprintf.c snprintf.h
 
 install:
 		install -d -m 755 $(PREFIX)/include/$(SOBASE)/;
-		install -m 644 ezV24.h ezV24_config.h $(PREFIX)/include/$(SOBASE)/
+		install -m 644 ezV24.h $(PREFIX)/include/$(SOBASE)/
 		install -m 644 -s $(LIBNAME) $(PREFIX)/lib/$(LIBNAME)
 		install -m 755 -s $(NAME) $(PREFIX)/lib/$(NAME)
 		if ! test -h $(PREFIX)/lib/$(SONAME); then \

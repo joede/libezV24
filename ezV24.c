@@ -15,6 +15,9 @@
  *
  * --------------------------------------------------------------------------
  * $Log$
+ * Revision 1.3  2002/09/10 08:03:28  jdesch
+ * Release 0.1.0
+ *
  * Revision 1.2  2002/06/20 11:42:43  jdesch
  * * add error code V24_E_TIMEOUT.
  * * some fixes in the documentation.
@@ -390,18 +393,18 @@ int v24SetParameters ( v24_port_t *port, int Baudrate, int Datasize, int Parity 
 	case V24_EVEN:			     /* even parity */
 	    options.c_cflag |= PARENB;
 	    options.c_cflag &= ~PARODD;
-	    options.c_cflag &= ~IGNPAR;
-	    options.c_iflag |= (INPCK|ISTRIP);
+	    options.c_iflag &= ~IGNPAR;
+	    options.c_iflag |= INPCK;	     /* removed "|ISTRIP" */
 	    break;
 	case V24_ODD:			     /* odd parity */
 	    options.c_cflag |= PARENB;
 	    options.c_cflag |= PARODD;
-	    options.c_cflag &= ~IGNPAR;
-	    options.c_iflag |= (INPCK|ISTRIP);
+	    options.c_iflag &= ~IGNPAR;
+	    options.c_iflag |= INPCK;	     /* removed "|ISTRIP" */
 	    break;
 	case V24_IGNORE:		     /* use parity but dont test */
 	    options.c_cflag |= PARENB;
-	    options.c_cflag |= IGNPAR;
+	    options.c_iflag |= IGNPAR;
 	    break;
 	default:
 	    port->Errno=V24_E_ILLPARITY;

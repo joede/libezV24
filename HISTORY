@@ -5,7 +5,7 @@
 
                   Project: `ezV24'
                    Author: Joerg Desch
-          Current Release: 0.0.4
+          Current Release: 0.1.0
 		  Licence: LGPL
 
            Used Libraries: POSIX
@@ -15,6 +15,20 @@
 |         Copyright   (c) Jörg Desch <jdesch@users.sourceforge.net>       |
 `========================================================================='
 
+
+
+10.9.2002 jd
+
+	Release 0.1.0
+
+9.9.2002 jd
+
+	* ezV24.c: v24SetParameters() has accidently used c_cflag to mask
+	  IGNPAR! This should have been c_iflag. On my Linux system, ISTRIP
+	  doesn't strip the parity bit (POSIX like), it strips the 8. bit. So
+          I've removed this.
+	* manual.dxx: add a sample for v24SetParameters().
+	* Makefile: there's no need to install ezV24_conf.h.
 
 20.6.2002 jd
 
@@ -27,7 +41,7 @@
 	  __EZV24_ERROR_CODES.
 	* manual.dxx: minor fixes.
 	* Makefile*: add target `clean-all' to remove all stuff that is
-	  generated. The Makefile for cygwin was missinh in the tarball.
+	  generated. The Makefile for cygwin was missing in the tarball.
 
 12.5.2002 jd
 
