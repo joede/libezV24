@@ -15,6 +15,9 @@
  *
  * --------------------------------------------------------------------------
  * $Log$
+ * Revision 1.4  2003/02/11 13:29:43  jdesch
+ * bugfixes and minor changes
+ *
  * Revision 1.3  2002/09/10 08:03:28  jdesch
  * Release 0.1.0
  *
@@ -147,6 +150,7 @@ int v24CountPorts ( unsigned long* BitMask )
     // either the name is not "unknown" and the fields "tx" or "rx" exists.
     // maybe !strstr(proc_line,"unknown") && strstr(proc_line,"tx:") is good.
     *BitMask = 0;
+    count = 0;
     do
     {
 	if ( fgets(proc_line,77,proc_fd)==NULL )
@@ -201,6 +205,7 @@ v24_port_t* v24OpenPort ( const char* PortName, unsigned int OpenFlags )
 {
     v24_port_t *handle=NULL;
     int open_mode;    
+    int tmp;
 
     /* check for `null pointer'
      */
@@ -229,7 +234,7 @@ v24_port_t* v24OpenPort ( const char* PortName, unsigned int OpenFlags )
     handle->OpenFlags=OpenFlags;
 
     open_mode = O_RDWR|O_NOCTTY;
-    if ( (OpenFlags&V24_NO_DELAY) )	     /* don't want to wait? */
+    if ( (OpenFlags&V24_NO_DELAY) )	     /* don't want to wait for DCD? */
 	open_mode |= O_NDELAY;
 
 #if EZV24_WANT_LOCKFILE
@@ -252,7 +257,31 @@ v24_port_t* v24OpenPort ( const char* PortName, unsigned int OpenFlags )
 	free(handle);
 	handle=NULL;
 	return NULL;
-    }    
+    }
+
+    if ( OpenFlags&V24_NO_DELAY )
+    {
+	/* In the case the user want's to wait for DCD on open, but don't want
+	 * NONBLOCKING reads, we have to reset O_NDELAY.
+	 */
+	if ( !(OpenFlags&V24_NON_BLOCK) )
+	{
+	    tmp = fcntl(handle->fd,F_GETFL,0);
+	    fcntl(handle->fd, F_SETFL, tmp & ~O_NDELAY);
+	}
+    }
+    else
+    {
+	/* We must enable O_NDELAY, if NONBLOCKING reads should be used, and
+	 * the user hasn't specified NDELAY.
+	 */
+	if ( OpenFlags&V24_NON_BLOCK )
+	{
+	    tmp = fcntl(handle->fd,F_GETFL,0);
+	    fcntl(handle->fd, F_SETFL, tmp|O_NDELAY);
+	}
+    }
+    
 
     if ( v24SetParameters(handle,V24_B9600,V24_8BIT,V24_NONE)!=V24_E_OK )
     {

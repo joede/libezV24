@@ -1,0 +1,17 @@
+2003-02-11  Joerg Desch  <jdesch@users.sourceforge.net>
+
+	Release 0.1.1
+	
+	* ezV24.c: (v24CountPorts) forgotten to set the local counter
+	`count' to 0. So the functions report the number of serial ports
+	-1!
+	(v24OpenPort): In the case the user want's to wait for DCD on
+	open, but don't want NONBLOCKING reads, we have to reset the
+	O_NDELAY flag after the open call.
+
+	* Makefile: set patchlevel to 1; I've append a _s to the name of
+	the static library; test-v24 is now build immediately with the
+	static library.
+
+	* test-v24.c (main): add new commandline option -b to enable
+	V24_NO_BLOCK.

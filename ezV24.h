@@ -15,6 +15,9 @@
  *
  * -----------------------------------------------------------------------
  * $Log$
+ * Revision 1.3  2003/02/11 13:29:43  jdesch
+ * bugfixes and minor changes
+ *
  * Revision 1.2  2002/06/20 11:42:43  jdesch
  * * add error code V24_E_TIMEOUT.
  * * some fixes in the documentation.
@@ -160,7 +163,8 @@ enum __EZV24_OPEN_FLAGS
 {
     V24_STANDARD    = 0x0000,		     /* just empty */
     V24_LOCK        = 0x0001,		     /* lock the port */
-    V24_NO_DELAY    = 0x0002,		     /* no wait on DCD */
+    V24_NO_DELAY    = 0x0002,		     /* no wait on DCD while opening
+					      * the port */
     V24_RTS_CTS     = 0x0004,		     /* use hardware handshakes */
     V24_XON_XOFF    = 0x0008,		     /* use software handshakes */
     V24_DROP_DTR    = 0x0010,		     /* drop DTR on close the port */
@@ -270,6 +274,7 @@ const char* v24PortName ( int PortNo, char* PortName );
  * \begin{tabular}{lll}
  *  \textbf{System} & \textbf{port-1}& \textbf{port-2} \\
  *  Linux           & /dev/ttyS0  & /dev/ttyS1  \\
+ *  NetBSD          & /dev/tty00  & /dev/tty01  \\
  *  IRIX            & /dev/ttyf1  & /dev/ttyf2  \\
  *  HP-UX           & /dev/tty1p0 & /dev/tty2p0 \\
  *  Solaris/SunOS   & /dev/ttya   & /dev/ttyb   \\
@@ -285,14 +290,15 @@ const char* v24PortName ( int PortNo, char* PortName );
  *   \item[#V24_LOCK#]    	lock the port. Therefore a lock file is
  *                              created. After the port is closed, the lock
  *                              file is removed automagically.
- *   \item[#V24_NO_DELAY#]	no wait on DCD.
+ *   \item[#V24_NO_DELAY#]	don't wait on DCD while opening the port.
  *   \item[#V24_RTS_CTS#] 	use RTS/CTS hardware handshake.
  *   \item[#V24_XON_XOFF#]	use Xon/Xoff software handshake.
  *   \item[#V24_DROP_DTR#]	drop DTR after closing the port.
  *   \item[#V24_NON_BLOCK#]	non blocking read. Using this flag, the read
  *                              access is not delayed. Without this, read will
  *                              wait until a character is received or the
- *                              timeout time is reached.
+ *                              timeout time is reached. Note that in non
+ *                              blocking mode, there is no time error!
  *   \item[#V24_DEBUG_ON#]	enable stderr messages.
  * \end{description}
  *
