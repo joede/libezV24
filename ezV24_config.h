@@ -2,11 +2,11 @@
  *
  * $Id$
  * -----------------------------------------------------------------------
- * Copyright  (c) 2001  Joerg Desch <jd@die-deschs.de>
+ * Copyright  (c) 2001  Joerg Desch <jdesch@users.sourceforge.net>
  * -----------------------------------------------------------------------
  * PROJECT: ezV24 -- easy RS232/V24 access
  * MODULE.: EZV24_CONFIG.H: OS Configuration Header
- * AUTOR..: Joerg Desch <jd@die-deschs.de>
+ * AUTOR..: Joerg Desch
  * -----------------------------------------------------------------------
  * DESCRIPTION:
  *
@@ -28,8 +28,11 @@
  *
  * -----------------------------------------------------------------------
  * $Log$
- * Revision 1.1  2002/06/20 09:51:20  jdesch
- * Initial revision
+ * Revision 1.2  2003/10/13 07:50:26  jdesch
+ * minor build-problems and typos fixed
+ *
+ * Revision 1.1.1.1  2002/06/20 09:51:20  jdesch
+ * First CVS import of release 0.0.4
  *
  *
  */

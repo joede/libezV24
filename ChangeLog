@@ -1,3 +1,10 @@
+2003-10-13  Joerg Desch  <jdesch@users.sourceforge.net>
+
+	* README (http): shame on me... wrong URL fixed.
+
+	* Makefile (test-v24): add -DUNINSTALLED to the rule for test-v24.
+
+
 2003-02-11  Joerg Desch  <jdesch@users.sourceforge.net>
 
 	Release 0.1.1

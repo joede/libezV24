@@ -2,11 +2,11 @@
  *
  * $Id$
  * --------------------------------------------------------------------------
- * Copyright  (c) 2001,02  Joerg Desch <jd@die-deschs.de>
+ * Copyright  (c) 2001,02  Joerg Desch <jdesch@users.sourceforge.net>
  * --------------------------------------------------------------------------
  * PROJECT: ezV24 -- easy RS232/V24 access
  * MODULE.: EZV24.C: 
- * AUTHOR.: Joerg Desch <jdesch@users.sourceforge.net>
+ * AUTHOR.: Joerg Desch
  * --------------------------------------------------------------------------
  * DESCRIPTION:
  *
@@ -15,6 +15,9 @@
  *
  * --------------------------------------------------------------------------
  * $Log$
+ * Revision 1.5  2003/10/13 07:50:26  jdesch
+ * minor build-problems and typos fixed
+ *
  * Revision 1.4  2003/02/11 13:29:43  jdesch
  * bugfixes and minor changes
  *

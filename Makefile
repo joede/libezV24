@@ -1,9 +1,9 @@
 #  $Id$
 #  -----------------------------------------------------------------------
-#  Copyright  (c) Joerg Desch <jd@die-deschs.de>
+#  Copyright  (c) Joerg Desch <jdesch@users.sourceforge.net>
 #  -----------------------------------------------------------------------
 #  PROJECT.: ezV24 -- easy RS232/V24 access
-#  AUTHOR..: Joerg Desch <jd@die-deschs.de>
+#  AUTHOR..: Joerg Desch
 #  COMPILER: g++ 2.95.x / Linux
 #
 #
@@ -170,7 +170,7 @@ api-ref:	doc++.conf manual.dxx ezV24.h
 #	gcc -o test-v24 -Wall test-v24.c -l$(SOBASE)
 #
 test-v24:	test-v24.c ezV24.h $(LIBNAME)
-		gcc -o test-v24 -Wall test-v24.c -L./ $(LIBNAME)
+		gcc -o test-v24 -Wall -DUNINSTALLED test-v24.c -L./ $(LIBNAME)
 
 
 # --------------------------------------------------------------------------

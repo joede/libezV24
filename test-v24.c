@@ -2,7 +2,7 @@
  *
  * $Id$
  * --------------------------------------------------------------------------
- * Copyright  (c) 2001  Joerg Desch <jd@die-deschs.de>
+ * Copyright  (c) 2001  Joerg Desch <jdesch@users.sourceforge.net>
  * -----------------------------------------------------------------------
  * PROJECT: ezV24 -- easy RS232/V24 access
  * MODULE.: TEST-V24.C: a very simple sample application
@@ -15,6 +15,9 @@
  *
  * --------------------------------------------------------------------------
  * $Log$
+ * Revision 1.3  2003/10/13 07:50:26  jdesch
+ * minor build-problems and typos fixed
+ *
  * Revision 1.2  2003/02/11 13:29:43  jdesch
  * bugfixes and minor changes
  *
@@ -30,7 +33,11 @@
 #include <string.h>
 #include <signal.h>
 
+#ifdef UNINSTALLED
+#include "ezV24.h"
+#else
 #include <ezV24/ezV24.h>
+#endif
 
 #define __TEST_V24_C__
 
