@@ -1,0 +1,94 @@
+                                                      -*- indented-text -*-
++=========================================================================+
+|                          DEVELOPMENT HISTORY                            |
+`========================================================================='
+
+                  Project: `ezV24'
+                   Author: Joerg Desch
+          Current Release: 0.0.4
+		  Licence: LGPL
+
+           Used Libraries: POSIX
+                 Compiler: ANSI-C
+
++=========================================================================+
+|            Copyright   (c) Jörg Desch <jd@die-deschs.de>                |
+`========================================================================='
+
+
+12.5.2002 jd
+
+	Release 0.0.4
+
+
+6.5.2002 jd
+
+	* bug in lockfile handling fixed. The call to buildLockName returns a
+	  V24_E_* constant and not --as used before-- a boolean.
+
+	* test-v24.c: i now use -p instead of -c to specify the port name.
+
+
+2.5.2002 jd
+
+	* add new functions v24SetStopbits() and v24SetRTS().
+
+
+11.3.2002 jd
+
+	* ezV24.c: v24SetDTR calls ioctrl with status instead of &status.
+
+	* test-v24.c: usage: -c instead of -p to select the port.
+
+
+24.1.2002 jd
+
+ 	* ezV24.c: bufferoverflow in v24Gets() wasn't checked. If the
+ 	  received string is larger than the passed buffer, the application
+ 	  crashes. I've forgotten to check the buffersize passed in
+ 	  `BuffSize'. `BuffSize' must be at least 2.
+	* ezV24.h: new error constant V24_E_ILLPARM. Documentation of v24Gets
+	  updated.
+
+
+18.11.2001 jd
+
+	* Release 0.0.3
+	
+
+15.11.2001 jd
+
+	* ezV24.h: include stdlib.h to get the definition of size_t.
+	* Add some rudimentary support for the Cygwin 1.3.x toolchain. I know
+	  it could be much better, but I'm no windoze-guy.
+
+13.11.2001 jd
+
+	* Makefile: add support to build static libraries.
+
+18.10.2001 jd
+
+	* test-v24.c: minor fixes
+	* ezV24.c: v24Gets() miss the `end of string', if there are following
+	  characters! In this case, the read() fetch the `end of string' and
+	  it isn't the last char in the buffer.
+	* Makefile: the install-rule detect existing links now.
+
+25.9.2001 jd
+
+	* Release 0.0.2
+	* finished the documentation using DOC++ (http://docpp.sourceforge.net)
+
+18.9.2001 jd
+
+	* start documenting the header.
+	* minor typo's fixed.
+
+20.8.2001 jd
+
+	* Release 0.0.1: first release to some testers
+
+
++=========================================================================+
+| END OF FILE                                                             |
+`========================================================================='
