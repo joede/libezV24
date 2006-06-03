@@ -15,6 +15,9 @@
  *
  * --------------------------------------------------------------------------
  * $Log$
+ * Revision 1.6  2006/06/03 19:34:06  jdesch
+ * Release 0.1.2: news functions and minor fixes
+ *
  * Revision 1.5  2003/10/13 07:50:26  jdesch
  * minor build-problems and typos fixed
  *
@@ -252,6 +255,10 @@ v24_port_t* v24OpenPort ( const char* PortName, unsigned int OpenFlags )
 	}
     }
 #endif
+
+    /* Syncronous mode option */
+    if ( handle->OpenFlags&V24_SYNC )        /* don't want to use buffers on writes */
+        open_mode |= O_SYNC;
 
     handle->fd = open(handle->PortName,open_mode);
     if ( handle->fd == -1 )
@@ -599,6 +606,7 @@ int v24Read ( v24_port_t *port, unsigned char* Buffer, size_t Len )
 int v24Write ( v24_port_t *port, const unsigned char* Buffer, size_t Len )
 {
     size_t _sent;
+    int result;
     
     if ( port==NULL )
     {
@@ -618,6 +626,17 @@ int v24Write ( v24_port_t *port, const unsigned char* Buffer, size_t Len )
 	port->Errno=V24_E_WRITE;
 	reportError(port,port->Errno,"v24Write");
     }
+
+    if ( port->OpenFlags&V24_SYNC )
+    {
+        result=tcdrain(port->fd);
+        if ( result < 0 )
+        {
+            port->Errno=V24_E_WRITE;
+            reportError(port,port->Errno,"v24Write");
+        }
+    }
+    
     return _sent;
 }
 
@@ -817,6 +836,64 @@ int v24SetRTS ( v24_port_t *port, int NewState )
     else
 	status &= ~TIOCM_RTS;
     ioctl(port->fd,TIOCMSET,&status);
+    return port->Errno;
+#else
+    port->Errno=V24_E_NOT_IMPLEMENTED;
+    return V24_E_NOT_IMPLEMENTED;
+#endif
+}
+
+
+int v24GetDSR ( v24_port_t *port, int *CurrState )
+{
+    int status;
+
+    *CurrState = V24_DSRCTS_UNKNOWN;
+
+    if ( port==NULL )
+    {
+	reportError(port,V24_E_ILLHANDLE,"v24GetDSR");
+	return V24_E_ILLHANDLE;
+    }
+    port->Errno=V24_E_OK;
+#if defined(__LINUX__) && !defined(__CYGWIN__)
+    ioctl(port->fd,TIOCMGET,&status);
+    if ( status & TIOCM_DSR )
+	*CurrState = V24_DSR_HIGH;
+    else
+	*CurrState = V24_DSR_LOW;
+    return port->Errno;
+#else
+    port->Errno=V24_E_NOT_IMPLEMENTED;
+    return V24_E_NOT_IMPLEMENTED;
+#endif
+}
+
+
+int v24GetCTS ( v24_port_t *port, int *CurrState )
+{
+    int status;
+
+    *CurrState = V24_DSRCTS_UNKNOWN;
+
+    if ( port==NULL )
+    {
+	reportError(port,V24_E_ILLHANDLE,"v24GetCTS");
+	return V24_E_ILLHANDLE;
+    }
+    port->Errno=V24_E_OK;
+    if ( port->OpenFlags&V24_RTS_CTS )
+    {
+	port->Errno=V24_E_ILLPARM;
+	return port->Errno;
+    }
+
+#if defined(__LINUX__) && !defined(__CYGWIN__)
+    ioctl(port->fd,TIOCMGET,&status);
+    if ( status & TIOCM_CTS )
+	*CurrState = V24_CTS_HIGH;
+    else
+	*CurrState = V24_CTS_LOW;
     return port->Errno;
 #else
     port->Errno=V24_E_NOT_IMPLEMENTED;

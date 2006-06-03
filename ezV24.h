@@ -15,6 +15,9 @@
  *
  * -----------------------------------------------------------------------
  * $Log$
+ * Revision 1.4  2006/06/03 19:34:06  jdesch
+ * Release 0.1.2: news functions and minor fixes
+ *
  * Revision 1.3  2003/02/11 13:29:43  jdesch
  * bugfixes and minor changes
  *
@@ -169,7 +172,18 @@ enum __EZV24_OPEN_FLAGS
     V24_XON_XOFF    = 0x0008,		     /* use software handshakes */
     V24_DROP_DTR    = 0x0010,		     /* drop DTR on close the port */
     V24_NON_BLOCK   = 0x0020,		     /* non blocking read */
+    V24_SYNC        = 0x0040,                /* syncronous writes, i.e. not using buffers */
     V24_DEBUG_ON    = 0x8000		     /* enable stderr messages */
+};
+
+
+enum __EZV24_STATUS_FLAGS
+{
+    V24_DSR_LOW=0,                           /* DSR state is down */
+    V24_DSR_HIGH,                            /* DSR state is up */
+    V24_CTS_LOW,                             /* CTS state is down */
+    V24_CTS_HIGH,                            /* CTS state is up */
+    V24_DSRCTS_UNKNOWN                       /* just in case the function returns abruptly */
 };
 
 
@@ -299,6 +313,8 @@ const char* v24PortName ( int PortNo, char* PortName );
  *                              wait until a character is received or the
  *                              timeout time is reached. Note that in non
  *                              blocking mode, there is no time error!
+ *   \item[#V24_SYNC#]          do all writes syncronously, i.e., do not use
+ *                              any buffering for writes.
  *   \item[#V24_DEBUG_ON#]	enable stderr messages.
  * \end{description}
  *
@@ -593,6 +609,37 @@ int v24SetDTR ( v24_port_t *port, int NewState );
  * @memo
  */
 int v24SetRTS (v24_port_t *port, int NewState );
+
+
+/** Get the state of the DSR line and store it on the parameter #CurrState#. If
+ * #CurrState# is #0# the DSR signal is unset, otherwise it is set.
+ *
+ * @param port pointer to handle of the opened port.
+ * @param CurrState pointer to the current state of DSR (see #V24_DSR_# constants). If
+ * there is a problem getting #CurrState#, it will be set to #V24_DSRCTS_UNKNOWN#.
+ * @return (int) the #V24_*# error code.
+ * @memo
+ */
+int v24GetDSR ( v24_port_t *port, int *CurrState );
+
+
+/** Get the state of the CTS line and store it on the parameter #CurrState#. If
+ * #CurrState# is #0# the CTS signal is unset, otherwise it is set. This will
+ * only happen if the port uses \emph{hardware handshaking}. This means,
+ * \Ref{v24OpenPort} is called with #V24_RTS_CTS#. If no hardware handshaking
+ * is used while calling this function, it aborts and returns #V24_E_ILLPARM#
+ * as error.
+ *
+ * The values returned are: #V24_E_OK#, #V24_E_ILLHANDLE#, #V24_E_ILLPARM#,
+ * #V24_E_NOT_IMPLEMENTED#.
+ *
+ * @param port pointer to handle of the opened port.
+ * @param CurrState pointer to the current state of CTS (see #V24_CTS_# constants). If
+ * there is a problem getting #CurrState#, it will be set to #V24_DSRCTS_UNKNOWN#.
+ * @return (int) the #V24_*# error code.
+ * @memo
+ */
+int v24GetCTS (v24_port_t *port, int *CurrState );
 
 
 /** This functions returns the platform dependent name of the currently opened

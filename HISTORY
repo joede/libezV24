@@ -5,7 +5,7 @@
 
                   Project: `ezV24'
                    Author: Joerg Desch
-          Current Release: 0.1.1
+          Current Release: 0.1.2
 		  Licence: LGPL
 
            Used Libraries: POSIX
@@ -15,6 +15,18 @@
 |         Copyright   (c) Jörg Desch <jdesch@users.sourceforge.net>       |
 `========================================================================='
 
+
+3.6.2006 jd
+
+	Release 0.1.2
+
+	* after adding 2 patches and some fixes, it is time to release the
+	  last release of the 0.1.x tree.
+
+7.10.2004 Celso Kopp Webber <celso@webbertek.com.br>
+
+	* implemented v24GetDSR() and v24GetCTS()
+	* added V24_SYNC open flag
 
 9.5.2003 jd
 

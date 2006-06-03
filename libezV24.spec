@@ -1,5 +1,5 @@
 %define _name		libezV24
-%define _version	0.1.1
+%define _version	0.1.2
 %define _rel		1
 
 %define _prefix	/usr

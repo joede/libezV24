@@ -12,10 +12,10 @@
 VERSION = 0.1
 # the release of the library; a change here means, that the API has
 # changes. This number is the major number of the above version
-SORELEASE = 0
+SORELEASE = 1
 # the patchlevel is the lowest release information. It is incremented
 # with each released bugfix.     **UNUSED FOR CYGWIN**
-PATCHLEVEL = 1
+PATCHLEVEL = 2
 # the base name of the library
 SOBASE = ezV24
 

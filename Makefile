@@ -12,10 +12,10 @@
 VERSION = 0.1
 # the release of the library; a change here means, that the API has
 # changes. This number is the major number of the above version
-SORELEASE = 0
+SORELEASE = 1
 # the patchlevel is the lowest release information. It is incremented
 # with each released bugfix.
-PATCHLEVEL = 1
+PATCHLEVEL = 2
 # the base name of the library
 SOBASE = ezV24
 
@@ -71,13 +71,16 @@ ARFLAGS = cru
 AR = ar
 RANLIB = ranlib
 
-# concatinate the compile flags
+# some distros have a messed up path when in su -
+LDCONFIG = /sbin/ldconfig
+
+# concatenate the compile flags
 CFLAGS = $(C_FLAG) $(C_DEFS)
 
 
 
 # ------------------------------------------------------------------------
-# AUTOMATISCHE COMPILE-ANWEISUNGEN
+# AUTOMATIC COMPILE INSTRUCTIONS
 # ------------------------------------------------------------------------
 
 .c.o:
@@ -85,7 +88,7 @@ CFLAGS = $(C_FLAG) $(C_DEFS)
 
 
 # --------------------------------------------------------------------------
-# ANHÄNGIGKEITEN
+# DEPENDENCIES
 # --------------------------------------------------------------------------
 
 all:		shared static test-v24
@@ -104,8 +107,8 @@ $(LIBNAME):	$(OBJS)
 		$(RANLIB) $(LIBNAME)
 
 
-# Abhängigkeiten des Source, jedoch dann ohne Generierungsanweisung, wenn
-# die Extension durch obigen Automatismus abgedeckt wird!
+# source dependencies, but doesn't do anything if the automatism above
+# already takes care of this!
 #
 
 ezV24.o:	ezV24.c ezV24.h ezV24_config.h snprintf.h
@@ -127,7 +130,7 @@ install:
 		ln -s $(PREFIX)/lib/$(NAME) $(DESTDIR)$(PREFIX)/lib/$(SONAME)
 		ln -s $(PREFIX)/lib/$(SONAME) $(DESTDIR)$(PREFIX)/lib/$(PLAINNAME)
 		if [ -z $$NO_LDCONFIG ]; then \
-		  ldconfig; \
+		  $(LDCONFIG); \
 		fi  
 
 uninstall:
@@ -137,7 +140,7 @@ uninstall:
 		rm -f $(PREFIX)/lib/$(NAME)
 		rm -f $(PREFIX)/lib/$(SONAME) $(PREFIX)/lib/$(PLAINNAME)
 		if [ -z $$NO_LDCONFIG ]; then \
-		  ldconfig; \
+		  $(LDCONFIG); \
 		fi  
 
 
@@ -174,7 +177,7 @@ test-v24:	test-v24.c ezV24.h $(LIBNAME)
 
 
 # --------------------------------------------------------------------------
-# ANDERE AUFGABEN
+# OTHER TASKS
 # --------------------------------------------------------------------------
 
 clean:
