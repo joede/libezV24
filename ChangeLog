@@ -42,8 +42,6 @@
 
 2003-02-11  Joerg Desch  <jdesch@users.sourceforge.net>
 
-	Release 0.1.1
-
 	* ezV24.c: (v24CountPorts) forgotten to set the local counter
 	`count' to 0. So the functions report the number of serial ports
 	-1!
