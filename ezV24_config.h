@@ -27,14 +27,6 @@
  *                        manual.
  *
  * -----------------------------------------------------------------------
- * $Log$
- * Revision 1.2  2003/10/13 07:50:26  jdesch
- * minor build-problems and typos fixed
- *
- * Revision 1.1.1.1  2002/06/20 09:51:20  jdesch
- * First CVS import of release 0.0.4
- *
- *
  */
 
 #ifndef __EZV24_CONFIG_H__
@@ -48,7 +40,7 @@ extern "C" {
 /* This is set to 1 (TRUE), if we need support for lock-files to protect the
  * opened device.
  */
-#ifdef __LINUX__ 
+#ifdef __LINUX__
 # ifdef __CYGWIN__
 #  define EZV24_WANT_LOCKFILE 1
 # else
@@ -59,7 +51,7 @@ extern "C" {
 #endif
 
 
-/* This is set 1 (TRUE), if we have POSIX complaint functions to access the
+/* This is set 1 (TRUE), if we have POSIX compliant functions to access the
  * serial port.
  */
 #ifdef __LINUX__
@@ -103,4 +95,3 @@ extern "C" {
 
 #endif
 /* ==[End of file]========================================================== */
-

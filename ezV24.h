@@ -5,7 +5,7 @@
  * Copyright  (c) 2001,02  Joerg Desch <jd@die-deschs.de>
  * -----------------------------------------------------------------------
  * PROJECT: ezV24 -- easy RS232/V24 access
- * MODULE.: EZV24.H: 
+ * MODULE.: EZV24.H:
  * AUTHOR.: Joerg Desch <jdesch@users.sourceforge.net>
  * -----------------------------------------------------------------------
  * DESCRIPTION:
@@ -14,22 +14,6 @@
  * COMPILER-FLAGS:
  *
  * -----------------------------------------------------------------------
- * $Log$
- * Revision 1.4  2006/06/03 19:34:06  jdesch
- * Release 0.1.2: news functions and minor fixes
- *
- * Revision 1.3  2003/02/11 13:29:43  jdesch
- * bugfixes and minor changes
- *
- * Revision 1.2  2002/06/20 11:42:43  jdesch
- * * add error code V24_E_TIMEOUT.
- * * some fixes in the documentation.
- * * some other minor corrections.
- *
- * Revision 1.1.1.1  2002/06/20 09:51:20  jdesch
- * First CVS import of release 0.0.4
- *
- *
  */
 
 #ifndef __EZV24_H__
@@ -69,7 +53,7 @@ enum __EZV24_ERROR_CODES
     V24_E_ILLPARITY,
 
     /** illegal handle. The parameter specifying the \emph{port handle} is
-     * bad. Make sure unused handle are set to #NULL#.
+     * bad. Make sure unused handles are set to #NULL#.
      */
     V24_E_ILLHANDLE,
     /// illegal timeout value.
@@ -83,7 +67,7 @@ enum __EZV24_ERROR_CODES
     /// can't write to the lock file.
     V24_E_WRITE_LOCK,
 
-    /** foreign lock file exist. This means, that another process allready has
+    /** foreign lock file exist. This means that another process already has
      * locked the port.
      */
     V24_E_LOCK_EXIST,
@@ -160,7 +144,7 @@ enum __EZV24_PARITY_FLAGS
     V24_ODD,				     /* odd parity */
     V24_IGNORE				     /* use parity but do not test it */
 };
-    
+
 
 enum __EZV24_OPEN_FLAGS
 {
@@ -172,7 +156,7 @@ enum __EZV24_OPEN_FLAGS
     V24_XON_XOFF    = 0x0008,		     /* use software handshakes */
     V24_DROP_DTR    = 0x0010,		     /* drop DTR on close the port */
     V24_NON_BLOCK   = 0x0020,		     /* non blocking read */
-    V24_SYNC        = 0x0040,                /* syncronous writes, i.e. not using buffers */
+    V24_SYNC        = 0x0040,                /* synchronous writes, i.e. not using buffers */
     V24_DEBUG_ON    = 0x8000		     /* enable stderr messages */
 };
 
@@ -232,18 +216,18 @@ typedef struct __EZV24_PORT_HANDLE v24_port_t;
  *
  * The line format of the virtual file should look like this:
  *
- * \begin{verbatim} 
+ * \begin{verbatim}
    0: uart:16550A port:3F8 irq:4 tx:0 rx:0
    1: uart:16550A port:2F8 irq:3 tx:0 rx:0
    2: uart:unknown port:3E8 irq:4
-   \end{verbatim} 
+   \end{verbatim}
  *
  * The result of the detection is stored in a #unsigned long# variable. For
- * every port found, the corresponding bit is set. The above sample shows us,
+ * every port found, the corresponding bit is set. The above sample shows us
  * that port0 (#ttyS0#) and port1 (#ttyS1#) are present. So the bit0 and bit1
  * of the variable referenced by #BitMask# are set.
  *
- * If the function failes to detect the installed ports, a #-1# is return. If
+ * If the function fails to detect the installed ports, a #-1# is returned. If
  * all went fine, the number of detected ports is returned.
  *
  * \textbf{Note:} this function can be used without an opened device!
@@ -256,14 +240,14 @@ int v24CountPorts ( unsigned long* BitMask );
 
 /** Build a valid port name. This function can be used to build the platform
  * dependent name of the serial device used by #v24OpenPort#. The exact format
- * of the the name is explained at \Ref{v24OpenPort}.
+ * of the name is explained at \Ref{v24OpenPort}.
  *
  * The parameter #PortNo# is the number of the port. The parameter #PortName#
- * is a pointer to a string buffer, where the built name is stored.
- * \textbf{Important:} the caller must ensure, that the string buffer
- * referenced by #PortName# could hold #V24_SZ_PORTNAME# characters.
+ * is a pointer to a string buffer where the built name is stored.
+ * \textbf{Important:} the caller must ensure that the string buffer
+ * referenced by #PortName# can hold #V24_SZ_PORTNAME# characters.
  *
- * To ease the use, the function return the pointer #PortName#.
+ * To ease the use, the function returns the pointer #PortName#.
  *
  * \textbf{Note:} this function can be used without an opened device!
  *
@@ -276,13 +260,13 @@ const char* v24PortName ( int PortNo, char* PortName );
 
 
 /** This function opens a serial device for reading and writing. A pointer to a
- * special \emph{handle} is return. This handle must be passed to all futher
+ * special \emph{handle} is returned. This handle must be passed to all further
  * functions. If the function fails to open the port, a value of #NULL# is
  * returned to indicate the error.
  *
  * The portname is a string which represents the serial device. This
  * representation is platform dependent. The following table shows the naming
- * on several different operating systems. To avoid the usage of this names,
+ * on several different operating systems. To avoid the usage of these names,
  * you can use \Ref{v24PortName} to build the name for you.
  *
  * \begin{tabular}{lll}
@@ -293,10 +277,11 @@ const char* v24PortName ( int PortNo, char* PortName );
  *  HP-UX           & /dev/tty1p0 & /dev/tty2p0 \\
  *  Solaris/SunOS   & /dev/ttya   & /dev/ttyb   \\
  *  Digital UNIX    & /dev/tty01  & /dev/tty02  \\
+ *  Cygwin          & /dev/ttyS0  & /dev/ttyS1  \\
  *  Windows         & com1:       & com2:
  * \end{tabular}
  *
- * The \emph{open flags} are used to specify a special behaviour ot the
+ * The \emph{open flags} are used to specify a special behaviour of the
  * library. The following flag can be OR'ed together.
  *
  * \begin{description}
@@ -313,7 +298,7 @@ const char* v24PortName ( int PortNo, char* PortName );
  *                              wait until a character is received or the
  *                              timeout time is reached. Note that in non
  *                              blocking mode, there is no time error!
- *   \item[#V24_SYNC#]          do all writes syncronously, i.e., do not use
+ *   \item[#V24_SYNC#]          do all writes synchronously, i.e., do not use
  *                              any buffering for writes.
  *   \item[#V24_DEBUG_ON#]	enable stderr messages.
  * \end{description}
@@ -328,7 +313,7 @@ const char* v24PortName ( int PortNo, char* PortName );
  * in #/var/lock#. The naming convention which must be used is #LCK..# followed
  * by the base name of the device.  For example, to lock #/dev/ttyS0# the file
  * #LCK..ttyS0# would be created.
- * 
+ *
  * The format used for device lock files must be the HDB UUCP lock file
  * format. The HDB format is to store the process identifier (PID) as a ten
  * byte ASCII decimal number, with a trailing newline. For example, if process
@@ -345,7 +330,7 @@ v24_port_t* v24OpenPort ( const char* PortName, unsigned int OpenFlags );
 
 
 /** This function closes a previously opened device. If a lock file is used,
- * this file will be removed. As a result the #V24_*# error code is
+ * this file will be removed. As a result, the #V24_*# error code is
  * returned. Possible errors are V#24_E_ILLHANDLE# and #V24_E_KILL_LOCK#. If
  * all went fine, #V24_E_OK# is returned.
  *
@@ -399,12 +384,12 @@ int v24SetStopbits ( v24_port_t *port, int Stops );
 
 
 /** All read functions may use a timeout mechanism while waiting for
- * characters. If this time limit is exceeded the function abort reading. The
- * timeout mechanism is only active, if the \emph{open flag} #V24_NON_BLOCK#
+ * characters. If this time limit is exceeded, the function abort reading. The
+ * timeout mechanism is only active if the \emph{open flag} #V24_NON_BLOCK#
  * isn't specified.
  *
  * The timeout duration is specified by the parameter #TenthOfSeconds#. This
- * value is given as a multiple of a thenth of a second.
+ * value is given as a multiple of a tenth of a second.
  *
  * The values returned are: #V24_E_OK#, #V24_E_ILLHANDLE#, #V24_E_ILLTIMEOUT#,
  * #V24_E_NOT_INIT#.
@@ -420,10 +405,10 @@ int v24SetTimeouts ( v24_port_t *port, int TenthOfSeconds );
 /** The function tries to read a single character from the opened device. To do
  * this, the function \Ref{v24Read} is used. If we have got some data, the
  * character is returned as integer value. The caller have to cast it to the
- * data type he need. 
+ * data type he need.
  *
- * In a case of an error, the functions returns #-1#. The caller has to use
- * \Ref{v24QueryErrno} to get the exact error code. Contrary to \Ref{v24Read},
+ * In case of an error, the function returns #-1#. The caller has to use
+ * \Ref{v24QueryErrno} to get the exact error code. Contrarily to \Ref{v24Read},
  * a timeout is reported as error!
  *
  * Possible error code are #V24_OK#, #V24_E_NULL_POINTER#, #V24_E_ILLHANDLE#,
@@ -437,7 +422,7 @@ int v24SetTimeouts ( v24_port_t *port, int TenthOfSeconds );
 int v24Getc ( v24_port_t *port );
 
 
-/** This function simply send one character. Nothing more and nothing less.
+/** This function simply sends one character. Nothing more and nothing less.
  *
  * The values returned are: #V24_E_OK#, #V24_E_ILLHANDLE#,
  *
@@ -450,10 +435,10 @@ int v24Putc ( v24_port_t *port, unsigned char TheData );
 
 
 /** #v24Read# is the basic function to get one or more received data bytes out
- * of the receive queue. If the queue is empty, the behavious of the function
+ * of the receive queue. If the queue is empty, the behaviour of the function
  * depends on the used \emph{open flags}. Without any open flags, a empty
  * receive queue leads to an error. If the flag #V24_NON_BLOCK# is used, the
- * function will wait for the reception of character. The wait time is limited
+ * function will wait for the reception of a character. The wait time is limited
  * to the given \emph{timeout time}. If this limit is exceeded, the function
  * aborts waiting. If nothing is read, the returned value is #0#, and the error
  * code is set to #V24_E_TIMEOUT#. At this level it's no real error, so there
@@ -464,12 +449,12 @@ int v24Putc ( v24_port_t *port, unsigned char TheData );
  * characters. The parameter #Len# is the number of characters to read.
  *
  * The function returns the number of character read. An error is indicated by
- * a return vlaue of #-1#. Use \Ref{v24QueryErrno} to get the exact error code.
+ * a return value of #-1#. Use \Ref{v24QueryErrno} to get the exact error code.
  *
  * Possible error code are #V24_OK#, #V24_E_NULL_POINTER#, #V24_E_ILLHANDLE#,
  * #V24_E_TIMEOUT# or #V24_READ#.
  *
- * \textbf{Note:} the caller has to ensure, that #Buffer# can hold the #Len#
+ * \textbf{Note:} the caller has to ensure that #Buffer# can hold the #Len#
  * characters.
  *
  * @param port pointer to handle of the opened port.
@@ -487,7 +472,7 @@ int v24Read ( v24_port_t *port, unsigned char* Buffer, size_t Len );
  * occurs, a #-1# is returned. Use #v24QueryErrno# to retrieve the error code.
  *
  * Possible error code are #V24_OK#, #V24_E_NULL_POINTER#, #V24_E_ILLHANDLE# or
- * #V24_WRITE#. 
+ * #V24_WRITE#.
  *
  * @param port pointer to handle of the opened port.
  * @param Buffer pointer to buffer.
@@ -501,9 +486,9 @@ int v24Write ( v24_port_t *port, const unsigned char* Buffer, size_t Len  );
 
 /** Receive a string. Unlike #v24Read#, which tries to read a fixed number of
  * character, #v24Gets# read characters unless #BuffSize# characters are
- * fetched, or a \emph{end of line} (#\n#) is recieved. At the end of the game,
- * the number of characters read ist returned. If an error occurs, a #-1# is
- * returned. The characters are stored in #Buffer#. The functions ensures a
+ * fetched, or a \emph{end of line} (#\n#) is received. At the end of the game,
+ * the number of characters read is returned. If an error occurs, a #-1# is
+ * returned. The characters are stored in #Buffer#. The function ensures a
  * #\0# terminated string!
  *
  * Possible error code are #V24_OK#, #V24_E_NULL_POINTER#, #V24_E_ILLPARM#,
@@ -549,7 +534,7 @@ int v24Puts ( v24_port_t *port, const char* Buffer );
 
 
 /** If implemented by the operating system, this function returns the number of
- * character waiting in the receive-queue. If the functions isn't available or
+ * character waiting in the receive-queue. If the function isn't available or
  * if an error happens, a #-1# is returned. Use #v24QueryErrno# to retrieve the
  * error code.
  *
@@ -595,7 +580,7 @@ int v24SetDTR ( v24_port_t *port, int NewState );
 
 /** Set the state of the RTS line according to the parameter #NewState#. If
  * #NewsState# is #0# the RTS signal is unset, otherwise it is set. This is
- * only allowed, if the port don't use \emph{hardware handshaking}. This means,
+ * only allowed if the port doesn't use \emph{hardware handshaking}. This means
  * \Ref{v24OpenPort} isn't called with #V24_RTS_CTS#. If hardware handshaking
  * is used while calling this function, it aborts and returns #V24_E_ILLPARM#
  * as error.
@@ -625,7 +610,7 @@ int v24GetDSR ( v24_port_t *port, int *CurrState );
 
 /** Get the state of the CTS line and store it on the parameter #CurrState#. If
  * #CurrState# is #0# the CTS signal is unset, otherwise it is set. This will
- * only happen if the port uses \emph{hardware handshaking}. This means,
+ * only happen if the port uses \emph{hardware handshaking}. This means
  * \Ref{v24OpenPort} is called with #V24_RTS_CTS#. If no hardware handshaking
  * is used while calling this function, it aborts and returns #V24_E_ILLPARM#
  * as error.
@@ -642,7 +627,7 @@ int v24GetDSR ( v24_port_t *port, int *CurrState );
 int v24GetCTS (v24_port_t *port, int *CurrState );
 
 
-/** This functions returns the platform dependent name of the currently opened
+/** This function returns the platform dependent name of the currently opened
  * device.
  *
  * @param port pointer to handle of the opened port.
@@ -652,9 +637,9 @@ int v24GetCTS (v24_port_t *port, int *CurrState );
 const char* v24QueryPortName ( v24_port_t *port );
 
 
-/** In some cases it is may be necessary to know the file handle returned by
+/** In some cases it may be necessary to know the file handle returned by
  * the internal #open# call. To retrieve the current file handle for an opened
- * port, use this function. 
+ * port, use this function.
  *
  * @param port pointer to handle of the opened port.
  * @return (int) internal used file handle.
@@ -664,7 +649,7 @@ int v24QueryFileHandle ( v24_port_t *port );
 
 
 /** If possible, all functions return the result of the operation as return
- * code. Some function don't do this. Therefore, the last error code could be
+ * code. Some functions don't do this. Therefore, the last error code could be
  * retrieved with this function.
  *
  * For example: #v24Read# reports an error by returning a #-1#. To get the
@@ -684,4 +669,3 @@ int v24QueryErrno ( v24_port_t *port );
 
 #endif
 /* ==[End of file]========================================================== */
-

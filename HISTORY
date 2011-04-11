@@ -16,6 +16,13 @@
 `========================================================================='
 
 
+	* strip access rights from created lock file added by
+	  Angelo GIRARDI <angelo.girardi@swing.be>. Angelos other idea is
+	  implemented in the next release.
+
+	* thanks to Jacques Pelletier <jpelletier@ieee.org> for the fixed
+	  typos. His other work will go into the next release.
+
 3.6.2006 jd
 
 	Release 0.1.2
@@ -110,7 +117,7 @@
 
 18.11.2001 jd
 
-	* Release 0.0.3	
+	* Release 0.0.3
 
 15.11.2001 jd
 
