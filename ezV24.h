@@ -16,6 +16,11 @@
  * -----------------------------------------------------------------------
  */
 
+/** @name Reference
+ *
+ * @{
+ */
+
 #ifndef __EZV24_H__
 #define __EZV24_H__ 1
 
@@ -37,7 +42,7 @@ extern "C" {
 #define V24_SZ_PORTNAME 25		     /* max. length of the port name */
 
 
-/**
+/** Error code of the library
  */
 enum __EZV24_ERROR_CODES
 {
@@ -102,28 +107,30 @@ enum __EZV24_ERROR_CODES
     V24_E_DBG_STALE_LOCK
 };
 
-
+/** Baudrates
+ *
+ */
 enum __EZV24_BAUDRATE
 {
-    V24_B0=0,				     /* used to drop DTR */
-    V24_B50,				     /* 50 baud */
-    V24_B75,				     /* 75 baud */
-    V24_B110,				     /* 110 baud */
-    V24_B134,				     /* 134.5 baud */
-    V24_B150,				     /* 150 baud */
-    V24_B200,				     /* 200 baud */
-    V24_B300,				     /* 300 baud */
-    V24_B600,				     /* 600 baud */
-    V24_B1200,				     /* 1200 baud */
-    V24_B1800,				     /* 1800 baud */
-    V24_B2400,				     /* 2400 baud */
-    V24_B4800,				     /* 4800 baud */
-    V24_B9600,				     /* 9600 baud */
-    V24_B19200,				     /* 19200 baud */
-    V24_B38400,				     /* 38400 baud */
-    V24_B57600,				     /* 57,600 baud */
-    V24_B115200,			     /* 115,200 baud */
-    V24_NUM_BAUDRATES			     /* the number of entries */
+    V24_B0=0,				     /** used to drop DTR */
+    V24_B50,				     /** 50 baud */
+    V24_B75,				     /** 75 baud */
+    V24_B110,				     /** 110 baud */
+    V24_B134,				     /** 134.5 baud */
+    V24_B150,				     /** 150 baud */
+    V24_B200,				     /** 200 baud */
+    V24_B300,				     /** 300 baud */
+    V24_B600,				     /** 600 baud */
+    V24_B1200,				     /** 1200 baud */
+    V24_B1800,				     /** 1800 baud */
+    V24_B2400,				     /** 2400 baud */
+    V24_B4800,				     /** 4800 baud */
+    V24_B9600,				     /** 9600 baud */
+    V24_B19200,				     /** 19200 baud */
+    V24_B38400,				     /** 38400 baud */
+    V24_B57600,				     /** 57,600 baud */
+    V24_B115200,			     /** 115,200 baud */
+    V24_NUM_BAUDRATES			     /** the number of entries */
 };
 
 
@@ -666,6 +673,8 @@ int v24QueryErrno ( v24_port_t *port );
 #ifdef __cplusplus
 };
 #endif
+
+/** @} */
 
 #endif
 /* ==[End of file]========================================================== */
