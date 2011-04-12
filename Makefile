@@ -15,7 +15,7 @@ VERSION = 0.1
 SORELEASE = 1
 # the patchlevel is the lowest release information. It is incremented
 # with each released bugfix.
-PATCHLEVEL = 2
+PATCHLEVEL = 3
 # the base name of the library
 SOBASE = ezV24
 

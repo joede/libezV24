@@ -4,3 +4,4 @@ test-v24
 libez*_s.a
 libez*.so*
 configure-stamp
+build-stamp

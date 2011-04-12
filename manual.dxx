@@ -18,10 +18,9 @@ The project is hosted at sourceforge. You can find the latest release of the
 `ezV24' library at http://libezV24.sourceforge.net/. If you have some questions,
 feel free to write me an email <jdesch@users.sourceforge.net>.
 
-
 The following sections should introduce into the usage of the <tt>ezV24</tt>
-library. At the time being, the current release only supports a shared
-library. Therefor you have to install the resulting <tt>.so</tt> file into
+library. The build process supports static and shared
+libraries. Therefor you have to install the resulting <tt>.so</tt> file into
 your <em>load path</em>. The installation part of the makefile uses the
 standard <tt>/usr/local</tt> tree. The headers are stored below
 <tt>/usr/local/ezV24</tt>, while the library file itself is installed
@@ -38,7 +37,6 @@ To compile and install the libary, just unpack the archive (you may have done
 this ;) and execute the following steps:
 
 <ol>
-
   <li> compile the library by typing `make'. The result should be a executable
   shared library named `libezV24.so.*'.
 
