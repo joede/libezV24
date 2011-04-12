@@ -3,7 +3,7 @@
 	* ezV24.h: converted from DOC++ to Doxygen. Fixed a bug in the description
 	of v24OpenPort, where V24_NON_BLOCK was wrong documented.
 
-	* manual.dxx: converted from DOc++ to Doxygen.
+	* manual.dxx: converted from DOC++ to Doxygen.
 
 2011-04-11  Joerg Desch  <jdesch@users.sourceforge.net>
 
