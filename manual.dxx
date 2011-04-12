@@ -1,7 +1,7 @@
 /* -*- Mode: C -*-
  * $Id$
  * -----------------------------------------------------------------------
- * Copyright  (c) 2001,02  Joerg Desch <jd@die-deschs.de>
+ * Copyright  (c) 2001-11  Joerg Desch <jdesch@users.sourceforge.net>
  * -----------------------------------------------------------------------
  * PROJECT: ezV24-Library
  * MODUL..: MANUAL.DXX:
@@ -95,17 +95,17 @@ gcc -o foo foo.c -lezV24
 
 To communicate over the serial device, you have to open and close it. Use
 \ref v24OpenPort to open the device. The next step is the correct setup of the
-communication parameters with \Ref{v24SetParameters}.  Note that you must have
+communication parameters with \ref v24SetParameters.  Note that you must have
 the access rights to do this. After the communication is done, use
-\Ref{v24ClosePort} to close the port and release the lock.
+\ref v24ClosePort to close the port and release the lock.
 
 To send and receive data, there are several pairs of functions available. It is
-possible to send and receive single bytes with \Ref{v24Getc} and
-\Ref{v24Putc}. To send an array with data, the functions \Ref{v24Read} and
-\Ref{v24Write} are the right choice. At last, usage of ASCIIZ strings is
-possible using \Ref{v24Gets} and \Ref{v24Puts}.
+possible to send and receive single bytes with \ref v24Getc and
+\ref v24Putc. To send an array with data, the functions \ref 24Read and
+\ref v24Write are the right choice. At last, usage of ASCIIZ strings is
+possible using \ref v24Gets and \ref v24Puts.
 
-More details and a few snippets of code are shown in the section \Ref{The Hello-World-Sample}.
+More details and a few snippets of code are shown in the section "The Hello-World-Sample".
 
 
 @subsection S_HELLO The Hello-World-Sample
@@ -158,10 +158,10 @@ is installed by <tt>installSignalhandler</tt>.
     v24ClosePort(UsedPort);
 \endverbatim
 
-This part opens the device #/dev/ttyS0#. After the work (of part-3) is done,
-the port is closed. This snippet doesn't use any special \emph{open
-flags}. The port name is fixed. To be a little bit more platform independent, we
-can use \Ref{v24PortName}.
+This part opens the device <tt>/dev/ttyS0</tt>. After the work (of part-3) is done,
+the port is closed. This snippet doesn't use any special <em>open flags</em>.
+The port name is fixed. To be a little bit more platform independent, we
+can use \ref v24PortName.
 
 \verbatim
     // part-3
@@ -178,9 +178,9 @@ can use \Ref{v24PortName}.
 In part-3, we try to set the communication parameters of the opened port. In
 the above sample, the baudrate is set to 9600. The size of the data byte is
 set to 8 bits, and the parity bit generation is disabled. To see all possible
-parameters, just have a look at \Ref{v24SetParameters}. The shown setup is
-the default used by \Ref{v24OpenPort}. Nevertheless, it is better to use an
-explicit call to <tt>v24SetParameters</tt> to setup the port. The code will be more
+parameters, just have a look at \ref v24SetParameters. The shown setup is
+the default used by \ref v24OpenPort. Nevertheless, it is better to use an
+explicit call to \ref v24SetParameters to setup the port. The code will be more
 readable and IMO it's better style.
 
 <b>Note:</b> as you can see, the program aborts, if the setup
