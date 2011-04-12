@@ -44,7 +44,7 @@ PLAINNAME = lib$(SOBASE).so
 PROJECTNAME = libezV24-$(VERSION).$(PATCHLEVEL)
 
 OBJS = ezV24.o snprintf.o
-LIBS = 
+LIBS =
 
 
 ifeq "${RELEASE}" "DEBUG"
@@ -52,7 +52,7 @@ C_OPT  = -O2
 C_FLAG = -c -Wall -fPIC $(C_OPT) -D$(PLATFORM) $(INCDIR)
 C_DEFS = -DDEBUG -DBETA
 LFLAGS = $(LIBDIR)
-else 
+else
 ifeq "${RELEASE}" "BETA"
 C_OPT  = -O2
 C_FLAG = -c -Wall -fPIC $(C_OPT) -D$(PLATFORM) $(INCDIR)
@@ -131,7 +131,7 @@ install:
 		ln -s $(PREFIX)/lib/$(SONAME) $(DESTDIR)$(PREFIX)/lib/$(PLAINNAME)
 		if [ -z $$NO_LDCONFIG ]; then \
 		  $(LDCONFIG); \
-		fi  
+		fi
 
 uninstall:
 		rm -f $(PREFIX)/include/ezV24/*
@@ -141,7 +141,7 @@ uninstall:
 		rm -f $(PREFIX)/lib/$(SONAME) $(PREFIX)/lib/$(PLAINNAME)
 		if [ -z $$NO_LDCONFIG ]; then \
 		  $(LDCONFIG); \
-		fi  
+		fi
 
 
 # This entry is for packing a distribution tarball
@@ -165,8 +165,8 @@ tarball:	api-ref
 
 # build the api reference
 #
-api-ref:	doc++.conf manual.dxx ezV24.h
-		doc++
+api-ref:	doxygen.conf manual.dxx ezV24.h
+		doxygen doxygen.conf
 
 # The ezV24-Test program. To compile the dynamic link version, the
 # library must be installed first! To avoid this, i use the static lib!
@@ -191,4 +191,3 @@ clean-all:
 
 
 # --[end of file]-----------------------------------------------------------
-
