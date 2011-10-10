@@ -4,7 +4,7 @@
 #  -----------------------------------------------------------------------
 #  PROJECT.: ezV24 -- easy RS232/V24 access
 #  AUTHOR..: Joerg Desch
-#  COMPILER: g++ 2.95.x / Linux
+#  COMPILER: gcc >2.95.x / Linux
 #
 #
 
@@ -28,6 +28,28 @@ PREFIX = /usr/local
 # an additional prefix for building RPM packages. NOTE: don't forget to add a
 # trailing slash!
 DESTDIR =
+
+# the tool chain
+ifdef CROSS_COMPILE
+  CC=$(CROSS_COMPILE)gcc
+  CXX=$(CROSS_COMPILE)g++
+  LD=$(CROSS_COMPILE)ld
+  AR=$(CROSS_COMPILE)ar
+  AS=$(CROSS_COMPILE)as
+  NM=$(CROSS_COMPILE)nm
+  STRIP=$(CROSS_COMPILE)strip
+  RANLIB=$(CROSS_COMPILE)ranlib
+else
+  CC=gcc
+  CXX=g++
+  LD=ld
+  AR=ar
+  AS=as
+  NM=nm
+  STRIP=strip
+  RANLIB=ranlib
+endif
+
 
 # generate the name of the output file in dependence of the development state.
 #
@@ -66,10 +88,8 @@ LFLAGS = -s $(LIBDIR)
 endif
 endif
 
-# tools to build the static library
+# flags to build the static library
 ARFLAGS = cru
-AR = ar
-RANLIB = ranlib
 
 # some distros have a messed up path when in su -
 LDCONFIG = /sbin/ldconfig
@@ -84,7 +104,7 @@ CFLAGS = $(C_FLAG) $(C_DEFS)
 # ------------------------------------------------------------------------
 
 .c.o:
-		gcc $(CFLAGS) $<
+		$(CC) $(CFLAGS) $<
 
 
 # --------------------------------------------------------------------------
@@ -100,7 +120,7 @@ static:		$(LIBNAME)
 
 
 $(NAME):	$(OBJS)
-		gcc -shared -W1,soname,$(SONAME) -o $(NAME) $(OBJS)
+		$(CC) -shared -W1,soname,$(SONAME) -o $(NAME) $(OBJS)
 
 $(LIBNAME):	$(OBJS)
 		$(AR) $(ARFLAGS) $(LIBNAME) $(OBJS)
@@ -173,7 +193,7 @@ api-ref:	doxygen.conf manual.dxx ezV24.h
 #	gcc -o test-v24 -Wall test-v24.c -l$(SOBASE)
 #
 test-v24:	test-v24.c ezV24.h $(LIBNAME)
-		gcc -o test-v24 -Wall -DUNINSTALLED test-v24.c -L./ $(LIBNAME)
+		$(CC) -o test-v24 -Wall -DUNINSTALLED test-v24.c -L./ $(LIBNAME)
 
 
 # --------------------------------------------------------------------------
