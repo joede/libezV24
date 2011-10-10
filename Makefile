@@ -39,6 +39,7 @@ ifdef CROSS_COMPILE
   NM=$(CROSS_COMPILE)nm
   STRIP=$(CROSS_COMPILE)strip
   RANLIB=$(CROSS_COMPILE)ranlib
+  NO_LDCONFIG=1
 else
   CC=gcc
   CXX=g++
@@ -144,14 +145,18 @@ install:
 		install -d -m 755 $(DESTDIR)$(PREFIX)/include/$(SOBASE)/
 		install -d -m 755 $(DESTDIR)$(PREFIX)/lib/
 		install -m 644 ezV24.h $(DESTDIR)$(PREFIX)/include/$(SOBASE)/
-		install -m 644 -s $(LIBNAME) $(DESTDIR)$(PREFIX)/lib/$(LIBNAME)
-		install -m 755 -s $(NAME) $(DESTDIR)$(PREFIX)/lib/$(NAME)
+		install -m 644 $(LIBNAME) $(DESTDIR)$(PREFIX)/lib/$(LIBNAME)
+		install -m 755 $(NAME) $(DESTDIR)$(PREFIX)/lib/$(NAME)
+		$(STRIP) $(DESTDIR)$(PREFIX)/lib/$(LIBNAME)
+		$(STRIP) $(DESTDIR)$(PREFIX)/lib/$(NAME)
 		rm -f $(DESTDIR)$(PREFIX)/lib/$(SONAME) $(DESTDIR)$(PREFIX)/lib/$(PLAINNAME)
 		ln -s $(PREFIX)/lib/$(NAME) $(DESTDIR)$(PREFIX)/lib/$(SONAME)
 		ln -s $(PREFIX)/lib/$(SONAME) $(DESTDIR)$(PREFIX)/lib/$(PLAINNAME)
+ifndef CROSS_COMPILE
 		if [ -z $$NO_LDCONFIG ]; then \
 		  $(LDCONFIG); \
 		fi
+endif
 
 uninstall:
 		rm -f $(PREFIX)/include/ezV24/*
@@ -159,10 +164,11 @@ uninstall:
 		rm -f $(PREFIX)/lib/$(LIBNAME)
 		rm -f $(PREFIX)/lib/$(NAME)
 		rm -f $(PREFIX)/lib/$(SONAME) $(PREFIX)/lib/$(PLAINNAME)
+ifndef CROSS_COMPILE
 		if [ -z $$NO_LDCONFIG ]; then \
 		  $(LDCONFIG); \
 		fi
-
+endif
 
 # This entry is for packing a distribution tarball
 #
