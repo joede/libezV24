@@ -1,3 +1,7 @@
+2011-10-10  Joerg Desch  <jdesch@users.sourceforge.net>
+
+	* Makefile: added support for CROSS_COMPILE define.
+
 2011-04-12  Joerg Desch  <jdesch@users.sourceforge.net>
 
 	* ezV24.h: converted from DOC++ to Doxygen. Fixed a bug in the description
