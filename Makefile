@@ -29,6 +29,7 @@ PREFIX = /usr/local
 # trailing slash!
 DESTDIR =
 
+
 # the tool chain
 ifdef CROSS_COMPILE
   CC=$(CROSS_COMPILE)gcc
@@ -66,9 +67,11 @@ PLAINNAME = lib$(SOBASE).so
 # basename of the project
 PROJECTNAME = libezV24-$(VERSION).$(PATCHLEVEL)
 
-OBJS = ezV24.o snprintf.o
+OBJS = src/ezV24.o src/snprintf.o
 LIBS =
 
+
+INCDIR = -I./ezV24
 
 ifeq "${RELEASE}" "DEBUG"
 C_OPT  = -O2
@@ -105,7 +108,7 @@ CFLAGS = $(C_FLAG) $(C_DEFS)
 # ------------------------------------------------------------------------
 
 .c.o:
-		$(CC) $(CFLAGS) $<
+		$(CC) $(CFLAGS) -o "$(<:%.c=%.o)" $<
 
 
 # --------------------------------------------------------------------------
@@ -132,9 +135,9 @@ $(LIBNAME):	$(OBJS)
 # already takes care of this!
 #
 
-ezV24.o:	ezV24.c ezV24.h ezV24_config.h snprintf.h
+src/ezV24.o:	src/ezV24.c ezV24/ezV24.h ezV24/ezV24_config.h ezV24/snprintf.h
 
-snprintf.o:	snprintf.c snprintf.h
+src/snprintf.o:	src/snprintf.c ezV24/snprintf.h
 
 
 
@@ -191,15 +194,15 @@ tarball:	api-ref
 
 # build the api reference
 #
-api-ref:	doxygen.conf manual.dxx ezV24.h
-		doxygen doxygen.conf
+api-ref:	doc/doxygen.conf doc/manual.dxx ezV24/ezV24.h
+		doxygen doc/doxygen.conf
 
 # The ezV24-Test program. To compile the dynamic link version, the
 # library must be installed first! To avoid this, i use the static lib!
 #	gcc -o test-v24 -Wall test-v24.c -l$(SOBASE)
 #
-test-v24:	test-v24.c ezV24.h $(LIBNAME)
-		$(CC) -o test-v24 -Wall -DUNINSTALLED test-v24.c -L./ $(LIBNAME)
+test-v24:	samples/test-v24.c ezV24/ezV24.h $(LIBNAME)
+		$(CC) -o test-v24 -Wall -DUNINSTALLED samples/test-v24.c -L./ $(INCDIR) $(LIBNAME)
 
 
 # --------------------------------------------------------------------------
@@ -207,13 +210,13 @@ test-v24:	test-v24.c ezV24.h $(LIBNAME)
 # --------------------------------------------------------------------------
 
 clean:
-		rm -f *.o core
+		rm -f src/*.o core
 
 clean-all:
-		rm -f *.o core test-v24 $(NAME) $(LIBNAME)
+		rm -f src/*.o core test-v24 $(NAME) $(LIBNAME)
 		rm -f $(PROJECTNAME).tar.gz
-		rm -f api-html/*
-		rmdir api-html
+		rm -f doc/api-html/*
+		rmdir doc/api-html
 
 
 # --[end of file]-----------------------------------------------------------
