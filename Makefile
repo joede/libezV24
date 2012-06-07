@@ -147,7 +147,7 @@ src/snprintf.o:	src/snprintf.c ezV24/snprintf.h
 install:
 		install -d -m 755 $(DESTDIR)$(PREFIX)/include/$(SOBASE)/
 		install -d -m 755 $(DESTDIR)$(PREFIX)/lib/
-		install -m 644 ezV24.h $(DESTDIR)$(PREFIX)/include/$(SOBASE)/
+		install -m 644 ezV24/ezV24.h $(DESTDIR)$(PREFIX)/include/$(SOBASE)/
 		install -m 644 $(LIBNAME) $(DESTDIR)$(PREFIX)/lib/$(LIBNAME)
 		install -m 755 $(NAME) $(DESTDIR)$(PREFIX)/lib/$(NAME)
 		$(STRIP) $(DESTDIR)$(PREFIX)/lib/$(LIBNAME)
