@@ -124,7 +124,7 @@ static:		$(LIBNAME)
 
 
 $(NAME):	$(OBJS)
-		$(CC) -shared -W1,soname,$(SONAME) -o $(NAME) $(OBJS)
+		$(CC) -shared -fPIC -Wl,-soname,$(SONAME) -o $(NAME) $(OBJS)
 
 $(LIBNAME):	$(OBJS)
 		$(AR) $(ARFLAGS) $(LIBNAME) $(OBJS)
