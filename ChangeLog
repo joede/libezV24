@@ -1,3 +1,7 @@
+2013-02-8  Joerg Desch  <jdesch@users.sourceforge.net>
+
+	Fix the Makefile to work with the toolchain of Ubuntu 12.10
+
 2012-02-22  Joerg Desch  <jdesch@users.sourceforge.net>
 
 	* Makefile: quick fix for build of file in subdirectories. The next step
