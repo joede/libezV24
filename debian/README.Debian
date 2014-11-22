@@ -1,0 +1,7 @@
+libezv24 for Debian
+-------------------
+
+This is the `debianized' package of ezV24, a C library for easy access to the
+serial ports. For more informations look at the README file.
+
+ -- Joerg Desch <jdesch@users.sourceforge.net>, Fri,  2 May 2003 13:55:14 +0200

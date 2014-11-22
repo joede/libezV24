@@ -5,7 +5,7 @@
 
                   Project: `ezV24'
                    Author: Joerg Desch
-          Current Release: 0.1.1
+          Current Release: 0.1.2
 		  Licence: LGPL
 
            Used Libraries: POSIX
@@ -15,6 +15,31 @@
 |         Copyright   (c) Jörg Desch <jdesch@users.sourceforge.net>       |
 `========================================================================='
 
+
+3.6.2006 jd
+
+	Release 0.1.2
+
+	* after adding 2 patches and some fixes, it is time to release the
+	  last release of the 0.1.x tree.
+
+7.10.2004 Celso Kopp Webber <celso@webbertek.com.br>
+
+	* implemented v24GetDSR() and v24GetCTS()
+	* added V24_SYNC open flag
+
+9.5.2003 jd
+
+	* add support for debian packages. Note that these two packages (the
+	  runtime and the devel package) are unofficial .deb's for woody.
+
+11.4.2003 jd
+
+	* Pascal Bleser <guru@unixtech.be> has made a spec file to build RPM
+	  packages. Binary build for SuSE-Linux could be found at
+	  http://guru.unixtech.be/rpm/packages/Development/libezV24/.
+	  Note: I can't build or test the RPM build process. If you have any
+	  questions about RPM's, please contact Pascal Bleser.
 
 11.2.2003 jd
 
@@ -27,7 +52,6 @@
 	* v24OpenPort() should now initialize non blocking read correctly.
 
 	* the base name of the static library now ends with a _s!
-
 
 10.9.2002 jd
 

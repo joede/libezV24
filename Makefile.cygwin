@@ -1,10 +1,10 @@
 #  $Id$
 #  -----------------------------------------------------------------------
-#  Copyright  (c) Joerg Desch <jd@die-deschs.de>
+#  Copyright  (c) Joerg Desch <jdesch@users.sourceforge.net>
 #  -----------------------------------------------------------------------
 #  PROJECT.: ezV24 -- easy RS232/V24 access
-#  AUTHOR..: Joerg Desch <jd@die-deschs.de>
-#  COMPILER: g++ 2.95.x / Linux
+#  AUTHOR..: Joerg Desch
+#  COMPILER: Cygwin GCC / Windoze
 #
 #
 
@@ -12,10 +12,10 @@
 VERSION = 0.1
 # the release of the library; a change here means, that the API has
 # changes. This number is the major number of the above version
-SORELEASE = 0
+SORELEASE = 1
 # the patchlevel is the lowest release information. It is incremented
 # with each released bugfix.     **UNUSED FOR CYGWIN**
-PATCHLEVEL = 1
+PATCHLEVEL = 2
 # the base name of the library
 SOBASE = ezV24
 
@@ -156,7 +156,7 @@ api-ref:	doc++.conf
 # installed!
 
 test-v24.exe:	test-v24.c ezV24.h
-		gcc -o test-v24.exe -Wall test-v24.c -l$(SOBASE)
+		gcc -o test-v24.exe -Wall -DUNINSTALLED test-v24.c -l$(SOBASE)
 
 
 

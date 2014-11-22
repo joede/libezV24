@@ -1,0 +1,23 @@
+Source: libezv24
+Priority: optional
+Maintainer: Joerg Desch <jdesch@users.sourceforge.net>
+Build-Depends: debhelper (>> 3.0.0)
+Standards-Version: 3.5.2
+
+Package: libezv24-dev
+Section: devel
+Architecture: any
+Depends: libezv24-1 (= ${Source-Version})
+Description: development files of the ezV24 library.
+ This package hold all the files you need to develop
+ applications which use libezV24 to access the serial
+ ports.
+
+Package: libezv24-1
+Section: libs
+Architecture: any
+Depends: ${shlibs:Depends}
+Description: runtime of the ezV24 library.
+ The ezV24 library provides an easy to use programming interface to
+ the serial ports of the *nix system. It uses the C posix API as
+ base of it's work.

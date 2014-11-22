@@ -1,0 +1,9 @@
+Document: libezv24-dev
+Title: Reference manual for libezV24
+Author: Joerg Desch
+Abstract: This manual describes the functions available in libezV24.
+Section: Apps/Programming
+
+Format: HTML
+Index: /usr/share/doc/libezv24-dev/api-ref.html/index.html
+Files: /usr/share/doc/libezv24-dev/api-ref.html/*.html
