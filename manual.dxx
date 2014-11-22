@@ -1,7 +1,7 @@
 /* -*- Mode: C -*-
  * $Id$
  * -----------------------------------------------------------------------
- * Copyright  (c) 2001  Joerg Desch <jd@die-deschs.de>
+ * Copyright  (c) 2001,02  Joerg Desch <jd@die-deschs.de>
  * -----------------------------------------------------------------------
  * PROJECT: ezV24-Library
  * MODUL..: MANUAL.DXX: 
@@ -15,7 +15,7 @@
 /** @name The ezV24 Library
 
 \begin{center}
-{\small Copyright (c) 2001 Joerg Desch}
+{\small Copyright (c) 2002 Joerg Desch}
 \end{center}
 
 The project it hosted at sourceforge. You can find the latest release of the
@@ -185,9 +185,31 @@ the port is closed. This snippet doesn't use any special \emph{open
 flags}. The port name is fix. To be a little bit more platform independent, we
 can use \Ref{v24PortName}.
 
-
 \begin{verbatim}
     // part-3
+    rc=v24SetParameters(UsedPort,V24_B9600,V24_8BIT,V24_NONE);
+    if ( rc!=V24_E_OK )
+    {
+        fputs("error: setup of the port failed!\n",stderr);
+	v24ClosePort(UsedPort);
+	return 1;
+    }
+    // part-4 ...    
+\end{verbatim}
+
+In part-3, we try to set the communication parameters of the opened port. In
+the above sample, the baudrate is set to 9600. The size of the data byte is
+set to 8 bits, and the parity bit generation is disabled. To see all possible
+parameters, just have a look at \Ref{v24SetParameters}. The shown setup is
+the default used by \Ref{v24OpenPort}. Nevertheless, it is better to use a
+explicit call to #v24SetParameters# to setup the port. The code will be more
+readable and IMO it's better style.
+
+\textbf{Note:} as you can see, the program aborts, if the setup
+fails. Because of this, we have to close the port!
+
+\begin{verbatim}
+    // part-4
     char* msg="Hello world.\n\r";
     char answer[80];
     rc=v24Puts(UsedPort,msg);
@@ -207,7 +229,7 @@ can use \Ref{v24PortName}.
     }
 \end{verbatim}
 
-This snippet send the string #"Hello world.\n\r"#. If all characters are sent,
+This snippet of part-4 send the string #"Hello world.\n\r"#. If all characters are sent,
 it waits for a reply. Look's good?
 
 For now that's all folks. (but I'm working on more stuff ;-)
