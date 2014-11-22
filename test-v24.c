@@ -15,6 +15,9 @@
  *
  * --------------------------------------------------------------------------
  * $Log$
+ * Revision 1.2  2003/02/11 13:29:43  jdesch
+ * bugfixes and minor changes
+ *
  * Revision 1.1.1.1  2002/06/20 09:51:21  jdesch
  * First CVS import of release 0.0.4
  *
@@ -155,7 +158,7 @@ int main( int argc, char* argv[] )
     optind=1;     /* start without prog-name */
     do
     {
-        switch( getopt(argc,argv,"lnHNrxdhwp:t:") )
+        switch( getopt(argc,argv,"lnHNrxdhwbp:t:") )
         {
 	    case 'p':
 		if ( optarg )
@@ -180,6 +183,10 @@ int main( int argc, char* argv[] )
 	    case 'n':
 		MyOpenFlags |= V24_NO_DELAY;
 		fputs("info: open with V24_NO_DELAY\n",stderr);
+		break;
+	    case 'b':
+		MyOpenFlags |= V24_NON_BLOCK;
+		fputs("info: open with V24_NON_BLOCK(ing)\n",stderr);
 		break;
 	    case 'r':
 		MyOpenFlags |= V24_RTS_CTS;
@@ -491,6 +498,7 @@ static void usage (void)
     fprintf(stderr,"-t sec\tset (and reenable) timeout to <sec> seconds.\n");
     fprintf(stderr,"-l\topen with V24_LOCK to use a lock file.\n");
     fprintf(stderr,"-n\topen with V24_NO_DELAY to disable timeouts.\n");
+    fprintf(stderr,"-b\topen with V24_NON_BLOCK to disable blocking.\n");
     fprintf(stderr,"-r\topen with V24_RTS_CTS for RTS/CTS handshake.\n");
     fprintf(stderr,"-x\topen with V24_XON_XOFF for XON/OFF handshake.\n");
     fprintf(stderr,"-d\topen with V24_DEBUG_ON to enable buildin error messages.\n");

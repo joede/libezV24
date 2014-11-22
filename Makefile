@@ -15,7 +15,7 @@ VERSION = 0.1
 SORELEASE = 0
 # the patchlevel is the lowest release information. It is incremented
 # with each released bugfix.
-PATCHLEVEL = 0
+PATCHLEVEL = 1
 # the base name of the library
 SOBASE = ezV24
 
@@ -33,7 +33,7 @@ else
 NAME = lib$(SOBASE).so.$(VERSION)
 endif
 SONAME = lib$(SOBASE).so.$(SORELEASE)
-LIBNAME = lib$(SOBASE)-$(SORELEASE).a
+LIBNAME = lib$(SOBASE)-$(SORELEASE)_s.a
 PLAINNAME = lib$(SOBASE).so
 
 # basename of the project
@@ -81,7 +81,7 @@ CFLAGS = $(C_FLAG) $(C_DEFS)
 # ANHÄNGIGKEITEN
 # --------------------------------------------------------------------------
 
-all:		shared static
+all:		shared static test-v24
 
 shared:		$(NAME)
 
@@ -140,7 +140,7 @@ tarball:
 		cp ezV24.h ezV24_config.h ezV24.c $(PROJECTNAME)/
 		cp snprintf.h snprintf.c test-v24.c $(PROJECTNAME)/
 		cp Makefile Makefile.cygwin README $(PROJECTNAME)/
-		cp AUTHORS HISTORY COPY* BUGS $(PROJECTNAME)/
+		cp AUTHORS HISTORY COPY* BUGS ChangeLog $(PROJECTNAME)/
 		cp doc++.conf manual.dxx $(PROJECTNAME)/
 		cp -r --parents api-html $(PROJECTNAME)/
 		tar cfz $(PROJECTNAME).tar.gz $(PROJECTNAME)
@@ -152,13 +152,12 @@ tarball:
 api-ref:	doc++.conf manual.dxx ezV24.h
 		doc++
 
-# The ezV24-Test program. To compile this file, the library must be
-# installed!
-
-test-v24:	test-v24.c ezV24.h
-		gcc -o test-v24 -Wall test-v24.c -l$(SOBASE)
-#		# to use the static library call:
-#		# gcc -o test-v24 -Wall test-v24.c -L./ $(LIBNAME)
+# The ezV24-Test program. To compile the dynamic link version, the
+# library must be installed first! To avoid this, i use the static lib!
+#	gcc -o test-v24 -Wall test-v24.c -l$(SOBASE)
+#
+test-v24:	test-v24.c ezV24.h $(LIBNAME)
+		gcc -o test-v24 -Wall test-v24.c -L./ $(LIBNAME)
 
 
 # --------------------------------------------------------------------------
@@ -169,7 +168,7 @@ clean:
 		rm -f *.o core
 
 clean-all:
-		rm -f *.o core $(NAME) $(LIBNAME)
+		rm -f *.o core test-v24 $(NAME) $(LIBNAME)
 		rm -f $(PROJECTNAME).tar.gz
 		rm -f api-html/*
 		rmdir api-html

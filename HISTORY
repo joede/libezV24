@@ -5,7 +5,7 @@
 
                   Project: `ezV24'
                    Author: Joerg Desch
-          Current Release: 0.1.0
+          Current Release: 0.1.1
 		  Licence: LGPL
 
            Used Libraries: POSIX
@@ -15,6 +15,18 @@
 |         Copyright   (c) Jörg Desch <jdesch@users.sourceforge.net>       |
 `========================================================================='
 
+
+11.2.2003 jd
+
+	Release 0.1.1
+
+	* all details on changes are now stored in the the file ChangeLog.
+
+	* fix a Bug in v24CountPorts().
+
+	* v24OpenPort() should now initialize non blocking read correctly.
+
+	* the base name of the static library now ends with a _s!
 
 
 10.9.2002 jd

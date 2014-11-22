@@ -9,13 +9,13 @@
 #
 
 # the version of the library     **UNUSED FOR CYGWIN**
-VERSION = 0.0
+VERSION = 0.1
 # the release of the library; a change here means, that the API has
 # changes. This number is the major number of the above version
 SORELEASE = 0
 # the patchlevel is the lowest release information. It is incremented
 # with each released bugfix.     **UNUSED FOR CYGWIN**
-PATCHLEVEL = 3
+PATCHLEVEL = 1
 # the base name of the library
 SOBASE = ezV24
 
@@ -34,7 +34,7 @@ else
 NAME = lib$(SOBASE)-$(SORELEASE).dll
 endif
 SONAME = lib$(SOBASE)-$(SORELEASE).dll
-LIBNAME = lib$(SOBASE)-$(SORELEASE).a
+LIBNAME = lib$(SOBASE)-$(SORELEASE)_s.a
 PLAINNAME = lib$(SOBASE).so
 
 # basename of the project
@@ -155,8 +155,8 @@ api-ref:	doc++.conf
 # The ezV24-Test program. To compile this file, the library must be
 # installed!
 
-test-v24:	test-v24.c ezV24.h
-		gcc -o test-v24 -Wall test-v24.c -l$(SOBASE)
+test-v24.exe:	test-v24.c ezV24.h
+		gcc -o test-v24.exe -Wall test-v24.c -l$(SOBASE)
 
 
 
@@ -168,7 +168,7 @@ clean:
 		rm -f *.o core
 
 clean-all:
-		rm -f *.o core $(NAME) $(LIBNAME)
+		rm -f *.o core test-v24.exe $(NAME) $(LIBNAME)
 		rm -f $(PROJECTNAME).tar.gz
 		rm -f api-html/*
 		rmdir api-html
