@@ -14,12 +14,6 @@
  * COMPILER-FLAGS:
  *
  * --------------------------------------------------------------------------
- * $Log$
- * Revision 1.1  2003/10/13 08:34:14  jdesch
- * new samples directory with v24dtr sample
- *
- *
- *
  */
 
 #include <stdio.h>

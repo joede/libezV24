@@ -14,17 +14,6 @@
  * COMPILER-FLAGS:
  *
  * --------------------------------------------------------------------------
- * $Log$
- * Revision 1.3  2003/10/13 07:50:26  jdesch
- * minor build-problems and typos fixed
- *
- * Revision 1.2  2003/02/11 13:29:43  jdesch
- * bugfixes and minor changes
- *
- * Revision 1.1.1.1  2002/06/20 09:51:21  jdesch
- * First CVS import of release 0.0.4
- *
- *
  */
 
 #include <stdio.h>
@@ -56,7 +45,7 @@
 
 
 /* This is the type of all defined test functions.
- */ 
+ */
 typedef int (*TestFunct) (void);
 
 /* Here we have the structure which defines a single testcase.
@@ -106,7 +95,7 @@ char DescSendOnly2[] =
 
 char DescStringQuery[] =
 "Test `string-query'\n"\
-"This test send the special command string to a SVG-100 device and wait\n"\
+"This test sends the special command string to a SVG-100 device and wait\n"\
 "for a string answer. After a `send-only', this function should test the\n"\
 "the reception of strings with v24Gets().\n";
 
@@ -126,7 +115,7 @@ test_def_t Tests[] =
     {"string-query",DescStringQuery,testStringQuery},
     {"send-only",DescSendOnly,testSendOnly},
     {"send-only2",DescSendOnly2,testSendOnly2},
-//    {"",Desc,test},    
+//    {"",Desc,test},
     {"",NULL,NULL}			     /* the last entry */
 };
 
@@ -219,7 +208,7 @@ int main( int argc, char* argv[] )
 		fputs("info: test specific wait enabled.\n",stderr);
 		break;
             case 'h':     // user want's help
-            case '?':     // getopt3() reports invalid option 
+            case '?':     // getopt3() reports invalid option
                 usage();
                 exit(1);
             default:
@@ -246,7 +235,7 @@ int main( int argc, char* argv[] )
 	showTestHelp();
 	return 0;
     }
-    
+
     TestNr=findTest();
     if ( TestNr < 0 )
 	return 2;
@@ -272,7 +261,7 @@ int main( int argc, char* argv[] )
 	return 1;
     }
     fputs("info: port opened!\n",stderr);
-    
+
     /* than we have to configure the port.
      */
     rc=v24SetParameters(UsedPort,V24_B9600,V24_8BIT,V24_NONE);
@@ -298,7 +287,7 @@ int main( int argc, char* argv[] )
 	else
 	    fprintf(stderr,"info: timeout is set to %dsec\n",MyTimeOut);
     }
-    
+
 
     if ( TestNr>=0 && ExecutionEnabled )
     {
@@ -306,7 +295,7 @@ int main( int argc, char* argv[] )
 	if ( rc!=V24_E_OK )
 	    fprintf(stderr,"error: test returns #%d\n",rc);
     }
-    
+
 
     /* At the end of all the stuff, we have close the port. ;-)
      */
@@ -346,9 +335,9 @@ void dumpErrorMessage ( int rc )
 
 
 
-/** This functions tries to find the the test referenced by the name given by
+/** This function tries to find the test referenced by the name given by
  * #TestName#. The array #Tests[]# holds all defined tests. This array is
- * searched using a case intensive string comparison. The functions returns the
+ * searched using a case sensitive string comparison. The functions returns the
  * index of the found test, or (-1) if no test with the given name exist.
  *
  * @return (int) the index of the found test or (-1).
@@ -356,10 +345,10 @@ void dumpErrorMessage ( int rc )
 static int findTest (void)
 {
     int i;
-    
+
     if ( TestName[0] == '\0')
 	return -1;
-    
+
     i=0;
     while ( Tests[i].TestName[0] != '\0' )
     {
@@ -390,12 +379,12 @@ static int testSendHello (void)
 {
     const char msg[]={"Hello World.\n\r"};
     int rc;
-    
+
     rc=v24Puts(UsedPort,msg);
     if ( rc < strlen(msg) )
 	dumpErrorMessage(rc);
     else
-	puts("send-hello: test done!\n");    
+	puts("send-hello: test done!\n");
     return 0;
 }
 
@@ -411,7 +400,7 @@ static int testStringQuery (void)
      */
     for (rc=0;rc<sizeof(answer);rc++)
 	answer[rc]='\0';
-    
+
     rc=v24Puts(UsedPort,msg);
     if ( rc < strlen(msg) )
     {
@@ -451,7 +440,7 @@ static int testSendOnly (void)
 {
     const unsigned char TestBytes[6]={0xAA,0x55,0xA5,0x5A,0x80,0x01};
     int rc, i;
-    
+
     for ( i=0; i<6; i++ )
     {
 	rc=v24Putc(UsedPort,TestBytes[i]);
@@ -462,7 +451,7 @@ static int testSendOnly (void)
 	}
     }
     if ( i==6 )
-	puts("send-only: test done!\n");    
+	puts("send-only: test done!\n");
     return (rc==V24_E_OK)?0:1;
 }
 
@@ -471,14 +460,14 @@ static int testSendOnly2 (void)
 {
     const unsigned char TestBytes[6]={0xAA,0x55,0xA5,0x5A,0x80,0x01};
     int rc;
-    
+
     rc=v24Write(UsedPort,TestBytes,6);
     if ( rc<6 )
     {
 	dumpErrorMessage(v24QueryErrno(UsedPort));
     }
     if ( rc==6 )
-	puts("send-only2: test done!\n");    
+	puts("send-only2: test done!\n");
     return (rc==6)?0:1;
 }
 
@@ -518,7 +507,7 @@ static void showTestHelp (void)
 {
     int TestNr;
     int i;
-   
+
     if ( TestName[0]=='\0' )
     {
 	puts("Use `-H' with a test name to get a description of the test!\n");
@@ -544,7 +533,7 @@ static void showTestHelp (void)
 static void installSignalhandler ( void )
 {
     signal(SIGINT,mySignalHandler);
-    signal(SIGTERM,mySignalHandler);    
+    signal(SIGTERM,mySignalHandler);
 }
 
 
@@ -557,4 +546,3 @@ static void mySignalHandler ( int reason )
 
 
 /* ==[End of file]========================================================== */
-
