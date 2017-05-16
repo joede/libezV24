@@ -1,8 +1,6 @@
 /* -*- Mode: C -*-
- *
- * $Id$
  * --------------------------------------------------------------------------
- * Copyright  (c) 2001  Joerg Desch <jdesch@users.sourceforge.net>
+ * Copyright  (c) 2017  Joerg Desch <github@jdesch.de>
  * -----------------------------------------------------------------------
  * PROJECT: ezV24 -- Sample Application
  * MODULE.: V24DTR.C: setup handshake signals
@@ -160,7 +158,7 @@ int main( int argc, char* argv[] )
 		fputs("info: wait for keypress.\n",stderr);
 		break;
             case 'h':     // user want's help
-            case '?':     // getopt3() reports invalid option 
+            case '?':     // getopt3() reports invalid option
                 usage();
                 exit(1);
             default:
@@ -190,7 +188,7 @@ int main( int argc, char* argv[] )
 	return 1;
     }
     fputs("info: port opened!\n",stderr);
-    
+
     /* than we have to configure the port.
      */
     rc=v24SetParameters(UsedPort,V24_B9600,V24_8BIT,V24_NONE);
@@ -272,7 +270,7 @@ static void usage (void)
 static void installSignalhandler ( void )
 {
     signal(SIGINT,mySignalHandler);
-    signal(SIGTERM,mySignalHandler);    
+    signal(SIGTERM,mySignalHandler);
 }
 
 
@@ -285,4 +283,3 @@ static void mySignalHandler ( int reason )
 
 
 /* ==[End of file]========================================================== */
-

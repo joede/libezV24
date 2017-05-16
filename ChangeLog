@@ -1,3 +1,22 @@
+2017-05-16 Joerg Desch <github@jdesch.de>
+
+	Fix snprintf.c to remove a warning.
+
+	Update my email address to the one used at github.
+
+2013-02-8  Joerg Desch  <jdesch@users.sourceforge.net>
+
+	Fix the Makefile to work with the toolchain of Ubuntu 12.10
+
+2012-02-22  Joerg Desch  <jdesch@users.sourceforge.net>
+
+	* Makefile: quick fix for build of file in subdirectories. The next step
+	well be support for GNU autotools.
+
+2011-10-10  Joerg Desch  <jdesch@users.sourceforge.net>
+
+	* Makefile: added support for CROSS_COMPILE define.
+
 2011-04-12  Joerg Desch  <jdesch@users.sourceforge.net>
 
 	* ezV24.h: converted from DOC++ to Doxygen. Fixed a bug in the description

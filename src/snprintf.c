@@ -39,13 +39,13 @@
  * software for any purpose.  It is provided "as is" without any express
  * or implied warranty.
  *
- * Changes and modifications for: 
+ * Changes and modifications for:
  *
  * xinetd Version 2.1.4-bsdi
  * xinetd Version 2.1.4-freebsd
  * xinetd Version 2.1.4-linux
  *
- * are      
+ * are
  *
  * (c) Copyright 1995 by Charles Murcko
  * All Rights Reserved
@@ -171,7 +171,7 @@ SCOPE int v24_vsnprintf(char *str, size_t size, const char *fmt, va_list ap);
  * Assumptions:
  *     - all floating point arguments are passed as doubles
  */
-SCOPE int 
+SCOPE int
 v24_snprintf(char *str, size_t size, const char *fmt, ...)
 {
     int cc;
@@ -320,7 +320,7 @@ conv_10(wide_int num, bool_int is_unsigned, bool_int *is_negative,
 	*is_negative = (num < 0);
 
 	/*
-	 * On a 2's complement machine, negating the most negative integer 
+	 * On a 2's complement machine, negating the most negative integer
 	 * results in a number that cannot be represented as a signed integer.
 	 * Here is what we do to obtain the number's magnitude:
 	 *              a. add 1 to the number
@@ -337,7 +337,7 @@ conv_10(wide_int num, bool_int is_unsigned, bool_int *is_negative,
     }
 
     /*
-     * We use a do-while loop so that we write at least 1 digit 
+     * We use a do-while loop so that we write at least 1 digit
      */
     do {
 	register u_wide_int new_magnitude = magnitude / 10;
@@ -354,7 +354,7 @@ conv_10(wide_int num, bool_int is_unsigned, bool_int *is_negative,
 /*
  * Do format conversion.
  */
-SCOPE int 
+SCOPE int
 v24_vsnprintf(char *str, size_t size, const char *fmt, va_list ap)
 {
     char *sp;
@@ -364,7 +364,7 @@ v24_vsnprintf(char *str, size_t size, const char *fmt, va_list ap)
 
     char *s = NULL;
     char *q;
-    int s_len;
+    int s_len = 0;
 
     int min_width = 0;
     int precision = 0;
@@ -630,7 +630,7 @@ v24_vsnprintf(char *str, size_t size, const char *fmt, va_list ap)
 
 		/*
 		 * If the pointer size is equal to the size of an unsigned
-		 * integer we convert the pointer to a hex number, otherwise 
+		 * integer we convert the pointer to a hex number, otherwise
 		 * we print "%p" to indicate that we don't handle "%p".
 		 */
 	    case 'p':
@@ -687,7 +687,7 @@ v24_vsnprintf(char *str, size_t size, const char *fmt, va_list ap)
 		PAD(min_width, s_len, pad_char);
 	    }
 	    /*
-	     * Print the string s. 
+	     * Print the string s.
 	     */
 	    for (i = s_len; i != 0; i--) {
 		INS_CHAR(*s, sp, bep, cc);
@@ -705,4 +705,3 @@ v24_vsnprintf(char *str, size_t size, const char *fmt, va_list ap)
 	str[size - 1] = NUL;
     return cc;
 }
-

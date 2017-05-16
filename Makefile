@@ -1,10 +1,9 @@
-#  $Id$
 #  -----------------------------------------------------------------------
-#  Copyright  (c) Joerg Desch <jdesch@users.sourceforge.net>
+#  Copyright  (c) Joerg Desch <github@jdesch.de>
 #  -----------------------------------------------------------------------
 #  PROJECT.: ezV24 -- easy RS232/V24 access
 #  AUTHOR..: Joerg Desch
-#  COMPILER: g++ 2.95.x / Linux
+#  COMPILER: gcc >2.95.x / Linux
 #
 #
 
@@ -15,7 +14,7 @@ VERSION = 0.1
 SORELEASE = 1
 # the patchlevel is the lowest release information. It is incremented
 # with each released bugfix.
-PATCHLEVEL = 3
+PATCHLEVEL = 4
 # the base name of the library
 SOBASE = ezV24
 
@@ -28,6 +27,30 @@ PREFIX = /usr/local
 # an additional prefix for building RPM packages. NOTE: don't forget to add a
 # trailing slash!
 DESTDIR =
+
+
+# the tool chain
+ifdef CROSS_COMPILE
+  CC=$(CROSS_COMPILE)gcc
+  CXX=$(CROSS_COMPILE)g++
+  LD=$(CROSS_COMPILE)ld
+  AR=$(CROSS_COMPILE)ar
+  AS=$(CROSS_COMPILE)as
+  NM=$(CROSS_COMPILE)nm
+  STRIP=$(CROSS_COMPILE)strip
+  RANLIB=$(CROSS_COMPILE)ranlib
+  NO_LDCONFIG=1
+else
+  CC=gcc
+  CXX=g++
+  LD=ld
+  AR=ar
+  AS=as
+  NM=nm
+  STRIP=strip
+  RANLIB=ranlib
+endif
+
 
 # generate the name of the output file in dependence of the development state.
 #
@@ -43,9 +66,11 @@ PLAINNAME = lib$(SOBASE).so
 # basename of the project
 PROJECTNAME = libezV24-$(VERSION).$(PATCHLEVEL)
 
-OBJS = ezV24.o snprintf.o
+OBJS = src/ezV24.o src/snprintf.o
 LIBS =
 
+
+INCDIR = -I./ezV24
 
 ifeq "${RELEASE}" "DEBUG"
 C_OPT  = -O2
@@ -66,10 +91,8 @@ LFLAGS = -s $(LIBDIR)
 endif
 endif
 
-# tools to build the static library
+# flags to build the static library
 ARFLAGS = cru
-AR = ar
-RANLIB = ranlib
 
 # some distros have a messed up path when in su -
 LDCONFIG = /sbin/ldconfig
@@ -84,7 +107,7 @@ CFLAGS = $(C_FLAG) $(C_DEFS)
 # ------------------------------------------------------------------------
 
 .c.o:
-		gcc $(CFLAGS) $<
+		$(CC) $(CFLAGS) -o "$(<:%.c=%.o)" $<
 
 
 # --------------------------------------------------------------------------
@@ -100,7 +123,7 @@ static:		$(LIBNAME)
 
 
 $(NAME):	$(OBJS)
-		gcc -shared -W1,soname,$(SONAME) -o $(NAME) $(OBJS)
+		$(CC) -shared -fPIC -Wl,-soname,$(SONAME) -o $(NAME) $(OBJS)
 
 $(LIBNAME):	$(OBJS)
 		$(AR) $(ARFLAGS) $(LIBNAME) $(OBJS)
@@ -111,9 +134,9 @@ $(LIBNAME):	$(OBJS)
 # already takes care of this!
 #
 
-ezV24.o:	ezV24.c ezV24.h ezV24_config.h snprintf.h
+src/ezV24.o:	src/ezV24.c ezV24/ezV24.h ezV24/ezV24_config.h ezV24/snprintf.h
 
-snprintf.o:	snprintf.c snprintf.h
+src/snprintf.o:	src/snprintf.c ezV24/snprintf.h
 
 
 
@@ -123,15 +146,19 @@ snprintf.o:	snprintf.c snprintf.h
 install:
 		install -d -m 755 $(DESTDIR)$(PREFIX)/include/$(SOBASE)/
 		install -d -m 755 $(DESTDIR)$(PREFIX)/lib/
-		install -m 644 ezV24.h $(DESTDIR)$(PREFIX)/include/$(SOBASE)/
-		install -m 644 -s $(LIBNAME) $(DESTDIR)$(PREFIX)/lib/$(LIBNAME)
-		install -m 755 -s $(NAME) $(DESTDIR)$(PREFIX)/lib/$(NAME)
+		install -m 644 ezV24/ezV24.h $(DESTDIR)$(PREFIX)/include/$(SOBASE)/
+		install -m 644 $(LIBNAME) $(DESTDIR)$(PREFIX)/lib/$(LIBNAME)
+		install -m 755 $(NAME) $(DESTDIR)$(PREFIX)/lib/$(NAME)
+		$(STRIP) $(DESTDIR)$(PREFIX)/lib/$(LIBNAME)
+		$(STRIP) $(DESTDIR)$(PREFIX)/lib/$(NAME)
 		rm -f $(DESTDIR)$(PREFIX)/lib/$(SONAME) $(DESTDIR)$(PREFIX)/lib/$(PLAINNAME)
 		ln -s $(PREFIX)/lib/$(NAME) $(DESTDIR)$(PREFIX)/lib/$(SONAME)
 		ln -s $(PREFIX)/lib/$(SONAME) $(DESTDIR)$(PREFIX)/lib/$(PLAINNAME)
+ifndef CROSS_COMPILE
 		if [ -z $$NO_LDCONFIG ]; then \
 		  $(LDCONFIG); \
 		fi
+endif
 
 uninstall:
 		rm -f $(PREFIX)/include/ezV24/*
@@ -139,10 +166,11 @@ uninstall:
 		rm -f $(PREFIX)/lib/$(LIBNAME)
 		rm -f $(PREFIX)/lib/$(NAME)
 		rm -f $(PREFIX)/lib/$(SONAME) $(PREFIX)/lib/$(PLAINNAME)
+ifndef CROSS_COMPILE
 		if [ -z $$NO_LDCONFIG ]; then \
 		  $(LDCONFIG); \
 		fi
-
+endif
 
 # This entry is for packing a distribution tarball
 #
@@ -165,15 +193,15 @@ tarball:	api-ref
 
 # build the api reference
 #
-api-ref:	doxygen.conf manual.dxx ezV24.h
-		doxygen doxygen.conf
+api-ref:	doc/doxygen.conf doc/manual.dxx ezV24/ezV24.h
+		doxygen doc/doxygen.conf
 
 # The ezV24-Test program. To compile the dynamic link version, the
 # library must be installed first! To avoid this, i use the static lib!
 #	gcc -o test-v24 -Wall test-v24.c -l$(SOBASE)
 #
-test-v24:	test-v24.c ezV24.h $(LIBNAME)
-		gcc -o test-v24 -Wall -DUNINSTALLED test-v24.c -L./ $(LIBNAME)
+test-v24:	samples/test-v24.c ezV24/ezV24.h $(LIBNAME)
+		$(CC) -o test-v24 -Wall -DUNINSTALLED samples/test-v24.c -L./ $(INCDIR) $(LIBNAME)
 
 
 # --------------------------------------------------------------------------
@@ -181,13 +209,13 @@ test-v24:	test-v24.c ezV24.h $(LIBNAME)
 # --------------------------------------------------------------------------
 
 clean:
-		rm -f *.o core
+		rm -f src/*.o core
 
 clean-all:
-		rm -f *.o core test-v24 $(NAME) $(LIBNAME)
+		rm -f src/*.o core test-v24 $(NAME) $(LIBNAME)
 		rm -f $(PROJECTNAME).tar.gz
-		rm -f api-html/*
-		rmdir api-html
+		rm -f doc/api-html/*
+		rmdir doc/api-html
 
 
 # --[end of file]-----------------------------------------------------------
