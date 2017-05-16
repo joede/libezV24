@@ -1,8 +1,6 @@
 /* -*- Mode: C -*-
- *
- * $Id$
  * --------------------------------------------------------------------------
- * Copyright  (c) 2001  Joerg Desch <jdesch@users.sourceforge.net>
+ * Copyright  (c) 2017  Joerg Desch <github@jdesch.de>
  * -----------------------------------------------------------------------
  * PROJECT: ezV24 -- easy RS232/V24 access
  * MODULE.: TEST-V24.C: a very simple sample application

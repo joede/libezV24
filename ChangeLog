@@ -2,6 +2,8 @@
 
 	Fix snprintf.c to remove a warning.
 
+	Update my email address to the one used at github.
+
 2013-02-8  Joerg Desch  <jdesch@users.sourceforge.net>
 
 	Fix the Makefile to work with the toolchain of Ubuntu 12.10

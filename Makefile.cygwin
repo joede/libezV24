@@ -1,6 +1,5 @@
-#  $Id$
 #  -----------------------------------------------------------------------
-#  Copyright  (c) Joerg Desch <jdesch@users.sourceforge.net>
+#  Copyright  (c) Joerg Desch <github@jdesch.de>
 #  -----------------------------------------------------------------------
 #  PROJECT.: ezV24 -- easy RS232/V24 access
 #  AUTHOR..: Joerg Desch
@@ -15,7 +14,7 @@ VERSION = 0.1
 SORELEASE = 1
 # the patchlevel is the lowest release information. It is incremented
 # with each released bugfix.     **UNUSED FOR CYGWIN**
-PATCHLEVEL = 2
+PATCHLEVEL = 4
 # the base name of the library
 SOBASE = ezV24
 

@@ -1,7 +1,6 @@
 /* -*- Mode: C -*-
- * $Id$
  * -----------------------------------------------------------------------
- * Copyright  (c) 2001-11  Joerg Desch <jdesch@users.sourceforge.net>
+ * Copyright  (c) 2001-17  Joerg Desch <github@jdesch.de>
  * -----------------------------------------------------------------------
  * PROJECT: ezV24-Library
  * MODUL..: MANUAL.DXX:
@@ -12,7 +11,7 @@
 
 /** @mainpage The ezV24 Library
 
-<center>Copyright (c) 2002-11 Joerg Desch</center>
+<center>Copyright (c) 2002-17 Joerg Desch</center>
 
 The project is hosted at sourceforge. You can find the latest release of the
 `ezV24' library at http://libezV24.sourceforge.net/. If you have some questions,

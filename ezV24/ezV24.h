@@ -1,12 +1,10 @@
 /* -*- Mode: C -*-
- *
- * $Id$
  * -----------------------------------------------------------------------
- * Copyright  (c) 2001,02  Joerg Desch <jd@die-deschs.de>
+ * Copyright  (c) 2017  Joerg Desch <github@jdesch.de>
  * -----------------------------------------------------------------------
  * PROJECT: ezV24 -- easy RS232/V24 access
  * MODULE.: EZV24.H:
- * AUTHOR.: Joerg Desch <jdesch@users.sourceforge.net>
+ * AUTHOR.: Joerg Desch
  * -----------------------------------------------------------------------
  * DESCRIPTION:
  *
