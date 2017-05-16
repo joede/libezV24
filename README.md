@@ -3,9 +3,8 @@
 The goal of the *ezV24* library is to provide an easy to use interface to the
 serial ports of an linux/unix system. At the current stage, it comes with
 rudimentary support for the CYGWIN toolchain (see
-http://www.cygwin.com/). Due to the great work of the cygwin folks, only
-minimal changes are needed. I know that that the cygwin-stuff isn't the final
-stuff, but it's a first step and it works.
+http://www.cygwin.com/). I don't have a Cygwin installation anymore, so this
+part of the code is untested!
 
 
 ## HOME ON THE NET
