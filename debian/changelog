@@ -1,3 +1,9 @@
+libezv24 (0.1.4-2) stretch-backports; urgency=medium
+
+  * Rebuild for stretch.
+
+ -- Joerg Desch <debian@jdesch.de>  Wed, 18 Apr 2018 14:07:16 +0200
+
 libezv24 (0.1.4-1) unstable; urgency=medium
 
   * New release
