@@ -53,3 +53,20 @@ else()
 endif()
 
 set_property(TARGET ezV24_shared PROPERTY SOVERSION ${ezV24_SOVERSION})
+
+## -------------------------------------------------------------------
+##
+install(TARGETS ezV24_static ezV24_shared EXPORT ezV24_Targets
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
+  RUNTIME DESTINATION bin
+  INCLUDES DESTINATION include/ezV24
+)
+install(
+  FILES
+    include/ezV24/ezV24.h
+  DESTINATION
+    include/ezV24/
+  COMPONENT
+    Devel
+)
