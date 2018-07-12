@@ -1,0 +1,4 @@
+* add CMake support. The goal is to replace the static Makefile(s) with
+  CMake.
+* add CMake module so ezV24 can be found by other projects.
+* add support for pkg-config.
