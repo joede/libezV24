@@ -1,3 +1,14 @@
+2018-07-12 Joerg Desch <github@jdesch.de>
+
+	Add first steps to get CMake support.
+
+	TODO:
+	- build and install word as expected. To set the installation prefix,
+	  cmake must be called with "cmake -DCMAKE_INSTALL_PREFIX:PATH="
+	- the *Config.cmake" file is generated but completely useless for now.
+	- the generated *Targets.cmake uses the build path instead of the
+	  installation pathes.
+
 2017-05-16 Joerg Desch <github@jdesch.de>
 
 	Fix snprintf.c to remove a warning.
