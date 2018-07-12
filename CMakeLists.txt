@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 3.1.0)
 
-project(ezV24)
-set(ezV24_VERSION 0.1.4)
+project(ezV24 VERSION "0.1.4")
 set(ezV24_SOVERSION 1)
 
 
@@ -17,9 +16,9 @@ set(viscadump_SRCS
 )
 
 add_library(ezV24_static STATIC ${viscadump_SRCS})
-set_property(TARGET ezV24_static PROPERTY VERSION ${ezV24_VERSION})
+set_property(TARGET ezV24_static PROPERTY VERSION ${PROJECT_VERSION})
 add_library(ezV24_shared SHARED ${viscadump_SRCS})
-set_property(TARGET ezV24_shared PROPERTY VERSION ${ezV24_VERSION})
+set_property(TARGET ezV24_shared PROPERTY VERSION ${PROJECT_VERSION})
 ## what is this good for? Only needed for shared libraries?
 ## ste this to 42 to check where it goes...
 set_property(TARGET ezV24_shared PROPERTY
@@ -94,7 +93,7 @@ install(
 include(CMakePackageConfigHelpers)
 write_basic_package_version_file(
   ezV24/ezV24ConfigVersion.cmake
-  VERSION ${ezV24_VERSION}
+  VERSION ${PROJECT_VERSION}
   COMPATIBILITY AnyNewerVersion
 )
 
@@ -103,15 +102,12 @@ export(EXPORT ezV24_Targets
   NAMESPACE ezV24::
 )
 
-set(ConfigPackageLocation lib/cmake/ezV24)
+set(CMakePackageLocation "lib/cmake/${PROJECT_NAME}")
 
-#~ configure_file(cmake/ezV24-config.cmake.in
-  #~ ezV24/ezV24Config.cmake
-  #~ @ONLY
-#~ )
-configure_package_config_file(${CMAKE_CURRENT_LIST_DIR}/cmake/ezV24-config.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/ezV24/ezV24Config.cmake
-    INSTALL_DESTINATION ${ConfigPackageLocation}
+configure_package_config_file(
+  ${CMAKE_CURRENT_LIST_DIR}/cmake/ezV24-config.cmake.in
+  ${CMAKE_CURRENT_BINARY_DIR}/ezV24/ezV24Config.cmake
+  INSTALL_DESTINATION ${CMakePackageLocation}
 )
 
 
@@ -122,14 +118,37 @@ install(EXPORT ezV24_Targets
   NAMESPACE
     ezV24::
   DESTINATION
-    ${ConfigPackageLocation}
+    ${CMakePackageLocation}
 )
 install(
   FILES
     ${CMAKE_CURRENT_BINARY_DIR}/ezV24/ezV24Config.cmake
     ${CMAKE_CURRENT_BINARY_DIR}/ezV24/ezV24ConfigVersion.cmake
   DESTINATION
-    ${ConfigPackageLocation}
+    ${CMakePackageLocation}
   COMPONENT
     Devel
+)
+
+
+## -------------------------------------------------------------------
+## pkg-config support stuff
+##
+set(PkgConfigLocation "lib/pkgconfig")
+
+## enable GNU autotools like names to process *.pc.in
+include( GNUInstallDirs )
+
+configure_file(
+  ${CMAKE_CURRENT_LIST_DIR}/libezV24.pc.in
+  ${CMAKE_CURRENT_BINARY_DIR}/libezV24.pc
+  @ONLY
+)
+install(
+  FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/libezV24.pc
+  DESTINATION
+    ${PkgConfigLocation}
+  COMPONENT
+    pkgconfig
 )

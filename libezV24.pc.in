@@ -1,0 +1,9 @@
+libdir=@CMAKE_INSTALL_FULL_LIBDIR@
+includedir=@CMAKE_INSTALL_FULL_INCLUDEDIR@
+
+Name: @PROJECT_NAME@
+Version: @PROJECT_VERSION@
+Description: serial port library
+Requires:
+Libs: -L${libdir} -lezV24
+Cflags: -I${includedir}
