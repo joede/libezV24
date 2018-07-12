@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.1.0)
 
 project(ezV24)
+set(ezV24_VERSION 0.1.4)
+set(ezV24_SOVERSION 1)
 
 
 ## Find includes in corresponding build directories
@@ -15,7 +17,17 @@ set(viscadump_SRCS
 )
 
 add_library(ezV24_static STATIC ${viscadump_SRCS})
+set_property(TARGET ezV24_static PROPERTY VERSION ${ezV24_VERSION})
 add_library(ezV24_shared SHARED ${viscadump_SRCS})
+set_property(TARGET ezV24_shared PROPERTY VERSION ${ezV24_VERSION})
+## what is this good for? Only needed for shared libraries?
+## ste this to 42 to check where it goes...
+set_property(TARGET ezV24_shared PROPERTY
+  INTERFACE_ezV24_shared_MAJOR_VERSION 42)
+set_property(TARGET ezV24_shared APPEND PROPERTY
+  COMPATIBLE_INTERFACE_STRING ezV24_shared_MAJOR_VERSION
+)
+
 
 target_include_directories(ezV24_static
 PUBLIC include/ezV24
@@ -40,4 +52,4 @@ else()
   target_compile_definitions(ezV24_shared PRIVATE __LINUX__=1)
 endif()
 
-set_property(TARGET ezV24_shared PROPERTY SOVERSION 1)
+set_property(TARGET ezV24_shared PROPERTY SOVERSION ${ezV24_SOVERSION})
