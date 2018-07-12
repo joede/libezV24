@@ -102,12 +102,19 @@ export(EXPORT ezV24_Targets
   FILE ezV24/ezV24Targets.cmake
   NAMESPACE ezV24::
 )
-configure_file(cmake/ezV24-config.cmake.in
-  ezV24/ezV24Config.cmake
-  @ONLY
-)
 
 set(ConfigPackageLocation lib/cmake/ezV24)
+
+#~ configure_file(cmake/ezV24-config.cmake.in
+  #~ ezV24/ezV24Config.cmake
+  #~ @ONLY
+#~ )
+configure_package_config_file(${CMAKE_CURRENT_LIST_DIR}/cmake/ezV24-config.cmake.in
+    ${CMAKE_CURRENT_BINARY_DIR}/ezV24/ezV24Config.cmake
+    INSTALL_DESTINATION ${ConfigPackageLocation}
+)
+
+
 install(EXPORT ezV24_Targets
   FILE
     ezV24Targets.cmake
