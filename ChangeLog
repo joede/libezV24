@@ -5,9 +5,13 @@
 	TODO:
 	- build and install word as expected. To set the installation prefix,
 	  cmake must be called with "cmake -DCMAKE_INSTALL_PREFIX:PATH="
-	- the *Config.cmake" file is generated but completely useless for now.
+	- the "*Config.cmake" file is generated but completely useless for now.
 	- the generated *Targets.cmake uses the build path instead of the
 	  installation pathes.
+
+	==> NOTE: after the switch from `configure_file` to the prefered
+	`configure_package_config_file`, the generated "*Config.cmake"
+	looks much better!
 
 2017-05-16 Joerg Desch <github@jdesch.de>
 
