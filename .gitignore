@@ -1,4 +1,5 @@
-api-html
+build/
+api-html/
 test-v24.exe
 test-v24
 libez*_s.a

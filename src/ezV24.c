@@ -30,7 +30,7 @@
 
 #define __EZV24_C__
 #include "snprintf.h"
-#include "ezV24.h"
+#include <ezV24.h>
 #include "ezV24_config.h"
 
 
